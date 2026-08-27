@@ -1,0 +1,13 @@
+{
+  "version": "v1.0.0",
+  "scope": "fixed-model-multimodal-shadow",
+  "thresholds": {
+    "min_schema_success_rate": 0.98,
+    "min_decision_accuracy": 0.95,
+    "min_policy_accuracy": 0.98,
+    "max_false_approve_rate": 0.0,
+    "max_false_reject_rate": 0.0,
+    "max_provider_count": 1,
+    "max_response_model_count": 1
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "manifest_version": "v1.1.0",
+  "baseline_id": "EV-DAY5-RULES-OCR-V1",
+  "frozen_on": "2026-08-26",
+  "engine": "rules-ocr",
+  "prompt_version": "rules-ocr-v1",
+  "retrieval_version": "policy_chunks_v1",
+  "dataset": {
+    "path": "data/golden_set/golden_set_v3.csv",
+    "dataset_version": "v3.0.0",
+    "schema_version": "1.2.0",
+    "sha256": "093fae7b0d19d35886898feb71b918c929a6ea6c55c70de96ae5639a47c7833e",
+    "normalized_fingerprint": "sha256:87b9b4ba4b6e8e58581a213dc9830ec557ff1f23dbf6d9f243deae3e68d61370"
+  },
+  "policy": {
+    "path": "data/policies/mock_policy_v1.md",
+    "sha256": "3f8a2dcab7fa38cf5781f7fcee734deea0f14492e7df4af958191d105c91b288"
+  },
+  "gates": {
+    "path": "config/evaluation_gates_v1.json",
+    "sha256": "cf2b859467972adea86cc42c49cabf208d29d66bd3fc9f18d85843adf4043429"
+  },
+  "artifacts": [
+    {
+      "path": "data/golden_set/assets/v3/asset_manifest.csv",
+      "sha256": "372afde36699bd9239aab267756519ebad8c3b556886780f9f2301f7f55c7560"
+    },
+    {
+      "path": "scripts/macos_vision_ocr.swift",
+      "sha256": "302859b628c19db9ec423832558214402b18078818f2f191f91bbd7bc56b294c"
+    },
+    {
+      "path": "src/trust_safety_agent/ocr_adjudicator.py",
+      "sha256": "3713dd77f70fb590e464add45238d5acda90e12f89bcfcb40b4e24abf0f95415"
+    },
+    {
+      "path": "scripts/build_golden_set_v3.py",
+      "sha256": "33fadd267572da03431027be77c87be8ca7f4b300f97422b45319e75c5579c96"
+    }
+  ],
+  "expected_metrics": {
+    "total_cases": 150,
+    "auto_decided_cases": 122,
+    "need_review_cases": 28,
+    "accuracy": 0.8133333333333334,
+    "auto_accuracy": 1.0,
+    "coverage": 0.8133333333333334,
+    "route_accuracy": 0.98,
+    "policy_accuracy": 1.0,
+    "false_approve_rate": 0.0,
+    "false_reject_rate": 0.0
+  },
+  "report_path": "data/eval_runs/EV-DAY5-RULES-OCR-V1/report.json"
+}

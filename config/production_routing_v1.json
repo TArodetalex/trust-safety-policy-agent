@@ -1,0 +1,7 @@
+{
+  "routing_version": "v1.0.0",
+  "minimum_rule_confidence": 0.85,
+  "minimum_ocr_decision_confidence": 0.85,
+  "minimum_llm_confidence": 0.85,
+  "require_image_approve_evidence": true
+}

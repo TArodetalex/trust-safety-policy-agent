@@ -1,0 +1,36 @@
+{
+  "manifest_version": "v1.0.0",
+  "baseline_id": "EV-DAY4-RULES-V1",
+  "frozen_on": "2026-08-26",
+  "engine": "rules",
+  "prompt_version": "rules-v1",
+  "retrieval_version": "policy_chunks_v1",
+  "dataset": {
+    "path": "data/golden_set/golden_set_v2.csv",
+    "dataset_version": "v2.0.0",
+    "schema_version": "1.1.0",
+    "sha256": "7a4f2466851849c22e91fa61e075a8d67ee7adee139de5b081f2bfaedadfa661",
+    "normalized_fingerprint": "sha256:9a9da7103cb4d3eccd06eaff2ae11ed9ccb39f4119a72f9ec7826bb66bfdd274"
+  },
+  "policy": {
+    "path": "data/policies/mock_policy_v1.md",
+    "sha256": "3f8a2dcab7fa38cf5781f7fcee734deea0f14492e7df4af958191d105c91b288"
+  },
+  "gates": {
+    "path": "config/evaluation_gates_v1.json",
+    "sha256": "cf2b859467972adea86cc42c49cabf208d29d66bd3fc9f18d85843adf4043429"
+  },
+  "expected_metrics": {
+    "total_cases": 70,
+    "auto_decided_cases": 60,
+    "need_review_cases": 10,
+    "accuracy": 0.8571428571428571,
+    "auto_accuracy": 1.0,
+    "coverage": 0.8571428571428571,
+    "route_accuracy": 1.0,
+    "policy_accuracy": 1.0,
+    "false_approve_rate": 0.0,
+    "false_reject_rate": 0.0
+  },
+  "report_path": "data/eval_runs/EV-DAY4-RULES-V1/report.json"
+}

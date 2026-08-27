@@ -1,0 +1,60 @@
+{
+  "plan_version": "v1.0.0",
+  "dataset_version": "v4.0.0",
+  "target_total": 210,
+  "seed": {
+    "path": "data/golden_set/golden_set_v3.csv",
+    "case_count": 150,
+    "next_case_id": "C151",
+    "normalized_fingerprint": "sha256:87b9b4ba4b6e8e58581a213dc9830ec557ff1f23dbf6d9f243deae3e68d61370"
+  },
+  "minimums": {
+    "boundary_cases": 180,
+    "image_cases": 90,
+    "human_review_cases": 45,
+    "decisions": {
+      "approve": 105,
+      "reject": 105
+    },
+    "splits": {
+      "regression": 104,
+      "development": 46,
+      "blind": 60
+    },
+    "content_types": {
+      "product": 85,
+      "video": 35,
+      "query": 35,
+      "shop_name": 30,
+      "shop_avatar": 25
+    },
+    "risk_levels": {
+      "high": 95,
+      "medium": 55,
+      "low": 60
+    },
+    "policies": {
+      "counterfeit": 21,
+      "knockoff": 21,
+      "trademark_misuse": 21,
+      "shop_impersonation": 21,
+      "risky_query": 21
+    },
+    "exemptions": {
+      "compatibility": 13,
+      "second_hand": 13,
+      "meaningful_word": 13,
+      "incidental_exposure": 13,
+      "co_brand": 13
+    },
+    "tags": {
+      "day7": 60,
+      "shadow": 60,
+      "multimodal": 90,
+      "explicit_signal": 67,
+      "exemption": 42,
+      "clean_generic": 10,
+      "occluded": 10
+    }
+  }
+}

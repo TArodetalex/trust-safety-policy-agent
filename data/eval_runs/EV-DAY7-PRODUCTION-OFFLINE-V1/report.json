@@ -1,0 +1,1453 @@
+{
+  "schema_version": "1.2.0",
+  "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1",
+  "generated_at": "2026-08-27T03:47:57.155288Z",
+  "dataset_version": "v4.0.0",
+  "dataset_fingerprint": "sha256:a69024c57e02ceb20eb60ee6ecc8b1aa32d91b2b9681614a178d9e85519c3f33",
+  "engine": "production",
+  "prompt_version": "production-routing-v1.0.0:offline",
+  "retrieval_version": "policy_chunks_v1",
+  "metrics": {
+    "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1",
+    "total_cases": 210,
+    "auto_decided_cases": 162,
+    "need_review_cases": 48,
+    "accuracy": 0.7714285714285715,
+    "auto_accuracy": 1.0,
+    "coverage": 0.7714285714285715,
+    "route_accuracy": 0.9857142857142858,
+    "policy_accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 0.8285714285714286,
+    "f1": 0.90625,
+    "false_reject_rate": 0.0,
+    "false_approve_rate": 0.0,
+    "review_rate": 0.22857142857142856,
+    "confusion_matrix": {
+      "approve": {
+        "approve": 75,
+        "reject": 0,
+        "need_review": 30
+      },
+      "reject": {
+        "approve": 0,
+        "reject": 87,
+        "need_review": 18
+      }
+    },
+    "error_counts": {
+      "unexpected_review": 3
+    }
+  },
+  "slices": {
+    "boundary:boundary": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:boundary:boundary",
+      "total_cases": 187,
+      "auto_decided_cases": 139,
+      "need_review_cases": 48,
+      "accuracy": 0.7433155080213903,
+      "auto_accuracy": 1.0,
+      "coverage": 0.7433155080213903,
+      "route_accuracy": 0.983957219251337,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 0.7857142857142857,
+      "f1": 0.88,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.25668449197860965,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 73,
+          "reject": 0,
+          "need_review": 30
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 66,
+          "need_review": 18
+        }
+      },
+      "error_counts": {
+        "unexpected_review": 3
+      }
+    },
+    "boundary:non_boundary": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:boundary:non_boundary",
+      "total_cases": 23,
+      "auto_decided_cases": 23,
+      "need_review_cases": 0,
+      "accuracy": 1.0,
+      "auto_accuracy": 1.0,
+      "coverage": 1.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 2,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 21,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "content_type:product": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:content_type:product",
+      "total_cases": 85,
+      "auto_decided_cases": 49,
+      "need_review_cases": 36,
+      "accuracy": 0.5764705882352941,
+      "auto_accuracy": 1.0,
+      "coverage": 0.5764705882352941,
+      "route_accuracy": 0.9647058823529412,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 0.7142857142857143,
+      "f1": 0.8333333333333333,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.4235294117647059,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 29,
+          "reject": 0,
+          "need_review": 28
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 20,
+          "need_review": 8
+        }
+      },
+      "error_counts": {
+        "unexpected_review": 3
+      }
+    },
+    "content_type:query": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:content_type:query",
+      "total_cases": 35,
+      "auto_decided_cases": 32,
+      "need_review_cases": 3,
+      "accuracy": 0.9142857142857143,
+      "auto_accuracy": 1.0,
+      "coverage": 0.9142857142857143,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 0.8888888888888888,
+      "f1": 0.9411764705882353,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.08571428571428572,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 8,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 24,
+          "need_review": 3
+        }
+      },
+      "error_counts": {}
+    },
+    "content_type:shop_avatar": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:content_type:shop_avatar",
+      "total_cases": 25,
+      "auto_decided_cases": 23,
+      "need_review_cases": 2,
+      "accuracy": 0.92,
+      "auto_accuracy": 1.0,
+      "coverage": 0.92,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 0.8666666666666667,
+      "f1": 0.9285714285714286,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.08,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 10,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 13,
+          "need_review": 2
+        }
+      },
+      "error_counts": {}
+    },
+    "content_type:shop_name": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:content_type:shop_name",
+      "total_cases": 30,
+      "auto_decided_cases": 27,
+      "need_review_cases": 3,
+      "accuracy": 0.9,
+      "auto_accuracy": 1.0,
+      "coverage": 0.9,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 0.85,
+      "f1": 0.9189189189189189,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.1,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 10,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 17,
+          "need_review": 3
+        }
+      },
+      "error_counts": {}
+    },
+    "content_type:video": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:content_type:video",
+      "total_cases": 35,
+      "auto_decided_cases": 31,
+      "need_review_cases": 4,
+      "accuracy": 0.8857142857142857,
+      "auto_accuracy": 1.0,
+      "coverage": 0.8857142857142857,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 0.8666666666666667,
+      "f1": 0.9285714285714286,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.11428571428571428,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 18,
+          "reject": 0,
+          "need_review": 2
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 13,
+          "need_review": 2
+        }
+      },
+      "error_counts": {}
+    },
+    "risk:high": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:risk:high",
+      "total_cases": 95,
+      "auto_decided_cases": 85,
+      "need_review_cases": 10,
+      "accuracy": 0.8947368421052632,
+      "auto_accuracy": 1.0,
+      "coverage": 0.8947368421052632,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 0.8947368421052632,
+      "f1": 0.9444444444444444,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.10526315789473684,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 85,
+          "need_review": 10
+        }
+      },
+      "error_counts": {}
+    },
+    "risk:low": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:risk:low",
+      "total_cases": 60,
+      "auto_decided_cases": 47,
+      "need_review_cases": 13,
+      "accuracy": 0.7833333333333333,
+      "auto_accuracy": 1.0,
+      "coverage": 0.7833333333333333,
+      "route_accuracy": 0.95,
+      "policy_accuracy": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.21666666666666667,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 47,
+          "reject": 0,
+          "need_review": 13
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        }
+      },
+      "error_counts": {
+        "unexpected_review": 3
+      }
+    },
+    "risk:medium": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:risk:medium",
+      "total_cases": 55,
+      "auto_decided_cases": 30,
+      "need_review_cases": 25,
+      "accuracy": 0.5454545454545454,
+      "auto_accuracy": 1.0,
+      "coverage": 0.5454545454545454,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 0.2,
+      "f1": 0.33333333333333337,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.45454545454545453,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 28,
+          "reject": 0,
+          "need_review": 17
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 2,
+          "need_review": 8
+        }
+      },
+      "error_counts": {}
+    },
+    "route:auto_decide": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:route:auto_decide",
+      "total_cases": 165,
+      "auto_decided_cases": 162,
+      "need_review_cases": 3,
+      "accuracy": 0.9818181818181818,
+      "auto_accuracy": 1.0,
+      "coverage": 0.9818181818181818,
+      "route_accuracy": 0.9818181818181818,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.01818181818181818,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 75,
+          "reject": 0,
+          "need_review": 3
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 87,
+          "need_review": 0
+        }
+      },
+      "error_counts": {
+        "unexpected_review": 3
+      }
+    },
+    "route:human_review": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:route:human_review",
+      "total_cases": 45,
+      "auto_decided_cases": 0,
+      "need_review_cases": 45,
+      "accuracy": 0.0,
+      "auto_accuracy": 0.0,
+      "coverage": 0.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 1.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 27
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 18
+        }
+      },
+      "error_counts": {}
+    },
+    "split:blind": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:split:blind",
+      "total_cases": 60,
+      "auto_decided_cases": 37,
+      "need_review_cases": 23,
+      "accuracy": 0.6166666666666667,
+      "auto_accuracy": 1.0,
+      "coverage": 0.6166666666666667,
+      "route_accuracy": 0.95,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 0.9,
+      "f1": 0.9473684210526316,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.38333333333333336,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 10,
+          "reject": 0,
+          "need_review": 20
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 27,
+          "need_review": 3
+        }
+      },
+      "error_counts": {
+        "unexpected_review": 3
+      }
+    },
+    "split:development": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:split:development",
+      "total_cases": 46,
+      "auto_decided_cases": 37,
+      "need_review_cases": 9,
+      "accuracy": 0.8043478260869565,
+      "auto_accuracy": 1.0,
+      "coverage": 0.8043478260869565,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 0.8571428571428571,
+      "f1": 0.923076923076923,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.1956521739130435,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 13,
+          "reject": 0,
+          "need_review": 5
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 24,
+          "need_review": 4
+        }
+      },
+      "error_counts": {}
+    },
+    "split:regression": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:split:regression",
+      "total_cases": 104,
+      "auto_decided_cases": 88,
+      "need_review_cases": 16,
+      "accuracy": 0.8461538461538461,
+      "auto_accuracy": 1.0,
+      "coverage": 0.8461538461538461,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 0.7659574468085106,
+      "f1": 0.8674698795180723,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.15384615384615385,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 52,
+          "reject": 0,
+          "need_review": 5
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 36,
+          "need_review": 11
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:brand_ambiguous": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:tag:brand_ambiguous",
+      "total_cases": 5,
+      "auto_decided_cases": 0,
+      "need_review_cases": 5,
+      "accuracy": 0.0,
+      "auto_accuracy": 0.0,
+      "coverage": 0.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 1.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 5
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:brand_only": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:tag:brand_only",
+      "total_cases": 25,
+      "auto_decided_cases": 0,
+      "need_review_cases": 25,
+      "accuracy": 0.0,
+      "auto_accuracy": 0.0,
+      "coverage": 0.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 1.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 12
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 13
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:clean_generic": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:tag:clean_generic",
+      "total_cases": 10,
+      "auto_decided_cases": 0,
+      "need_review_cases": 10,
+      "accuracy": 0.0,
+      "auto_accuracy": 0.0,
+      "coverage": 0.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 1.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 10
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:clear": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:tag:clear",
+      "total_cases": 18,
+      "auto_decided_cases": 15,
+      "need_review_cases": 3,
+      "accuracy": 0.8333333333333334,
+      "auto_accuracy": 1.0,
+      "coverage": 0.8333333333333334,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.16666666666666666,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 5,
+          "reject": 0,
+          "need_review": 3
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 10,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:co_brand": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:tag:co_brand",
+      "total_cases": 10,
+      "auto_decided_cases": 10,
+      "need_review_cases": 0,
+      "accuracy": 1.0,
+      "auto_accuracy": 1.0,
+      "coverage": 1.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 10,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:compatibility": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:tag:compatibility",
+      "total_cases": 8,
+      "auto_decided_cases": 8,
+      "need_review_cases": 0,
+      "accuracy": 1.0,
+      "auto_accuracy": 1.0,
+      "coverage": 1.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 8,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:conflicting_signals": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:tag:conflicting_signals",
+      "total_cases": 11,
+      "auto_decided_cases": 0,
+      "need_review_cases": 11,
+      "accuracy": 0.0,
+      "auto_accuracy": 0.0,
+      "coverage": 0.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 1.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 2
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 9
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:counterfeit": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:tag:counterfeit",
+      "total_cases": 13,
+      "auto_decided_cases": 10,
+      "need_review_cases": 3,
+      "accuracy": 0.7692307692307693,
+      "auto_accuracy": 1.0,
+      "coverage": 0.7692307692307693,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 0.7692307692307693,
+      "f1": 0.8695652173913044,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.23076923076923078,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 10,
+          "need_review": 3
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:day7": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:tag:day7",
+      "total_cases": 60,
+      "auto_decided_cases": 40,
+      "need_review_cases": 20,
+      "accuracy": 0.6666666666666666,
+      "auto_accuracy": 1.0,
+      "coverage": 0.6666666666666666,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 0.8333333333333334,
+      "f1": 0.9090909090909091,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.3333333333333333,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 15,
+          "reject": 0,
+          "need_review": 15
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 25,
+          "need_review": 5
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:evasion": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:tag:evasion",
+      "total_cases": 1,
+      "auto_decided_cases": 1,
+      "need_review_cases": 0,
+      "accuracy": 1.0,
+      "auto_accuracy": 1.0,
+      "coverage": 1.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 1,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:exemption": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:tag:exemption",
+      "total_cases": 42,
+      "auto_decided_cases": 42,
+      "need_review_cases": 0,
+      "accuracy": 1.0,
+      "auto_accuracy": 1.0,
+      "coverage": 1.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 42,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:explicit_signal": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:tag:explicit_signal",
+      "total_cases": 67,
+      "auto_decided_cases": 62,
+      "need_review_cases": 5,
+      "accuracy": 0.9253731343283582,
+      "auto_accuracy": 1.0,
+      "coverage": 0.9253731343283582,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 0.9253731343283582,
+      "f1": 0.9612403100775194,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.07462686567164178,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 62,
+          "need_review": 5
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:image_dependent": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:tag:image_dependent",
+      "total_cases": 90,
+      "auto_decided_cases": 67,
+      "need_review_cases": 23,
+      "accuracy": 0.7444444444444445,
+      "auto_accuracy": 1.0,
+      "coverage": 0.7444444444444445,
+      "route_accuracy": 0.9666666666666667,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 0.8888888888888888,
+      "f1": 0.9411764705882353,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.25555555555555554,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 27,
+          "reject": 0,
+          "need_review": 18
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 40,
+          "need_review": 5
+        }
+      },
+      "error_counts": {
+        "unexpected_review": 3
+      }
+    },
+    "tag:incidental_exposure": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:tag:incidental_exposure",
+      "total_cases": 8,
+      "auto_decided_cases": 8,
+      "need_review_cases": 0,
+      "accuracy": 1.0,
+      "auto_accuracy": 1.0,
+      "coverage": 1.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 8,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:insufficient_context": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:tag:insufficient_context",
+      "total_cases": 25,
+      "auto_decided_cases": 0,
+      "need_review_cases": 25,
+      "accuracy": 0.0,
+      "auto_accuracy": 0.0,
+      "coverage": 0.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 1.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 12
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 13
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:knockoff": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:tag:knockoff",
+      "total_cases": 16,
+      "auto_decided_cases": 12,
+      "need_review_cases": 4,
+      "accuracy": 0.75,
+      "auto_accuracy": 1.0,
+      "coverage": 0.75,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 0.75,
+      "f1": 0.8571428571428571,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.25,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 12,
+          "need_review": 4
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:legacy_v1": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:tag:legacy_v1",
+      "total_cases": 50,
+      "auto_decided_cases": 50,
+      "need_review_cases": 0,
+      "accuracy": 1.0,
+      "auto_accuracy": 1.0,
+      "coverage": 1.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 25,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 25,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:low_contrast": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:tag:low_contrast",
+      "total_cases": 13,
+      "auto_decided_cases": 10,
+      "need_review_cases": 3,
+      "accuracy": 0.7692307692307693,
+      "auto_accuracy": 1.0,
+      "coverage": 0.7692307692307693,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.23076923076923078,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 5,
+          "reject": 0,
+          "need_review": 3
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 5,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:meaningful_word": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:tag:meaningful_word",
+      "total_cases": 8,
+      "auto_decided_cases": 8,
+      "need_review_cases": 0,
+      "accuracy": 1.0,
+      "auto_accuracy": 1.0,
+      "coverage": 1.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 8,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:multimodal": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:tag:multimodal",
+      "total_cases": 90,
+      "auto_decided_cases": 67,
+      "need_review_cases": 23,
+      "accuracy": 0.7444444444444445,
+      "auto_accuracy": 1.0,
+      "coverage": 0.7444444444444445,
+      "route_accuracy": 0.9666666666666667,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 0.8888888888888888,
+      "f1": 0.9411764705882353,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.25555555555555554,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 27,
+          "reject": 0,
+          "need_review": 18
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 40,
+          "need_review": 5
+        }
+      },
+      "error_counts": {
+        "unexpected_review": 3
+      }
+    },
+    "tag:negative_control": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:tag:negative_control",
+      "total_cases": 33,
+      "auto_decided_cases": 8,
+      "need_review_cases": 25,
+      "accuracy": 0.24242424242424243,
+      "auto_accuracy": 1.0,
+      "coverage": 0.24242424242424243,
+      "route_accuracy": 0.9090909090909091,
+      "policy_accuracy": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.7575757575757576,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 8,
+          "reject": 0,
+          "need_review": 25
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        }
+      },
+      "error_counts": {
+        "unexpected_review": 3
+      }
+    },
+    "tag:occluded": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:tag:occluded",
+      "total_cases": 10,
+      "auto_decided_cases": 0,
+      "need_review_cases": 10,
+      "accuracy": 0.0,
+      "auto_accuracy": 0.0,
+      "coverage": 0.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 1.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 5
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 5
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:ocr": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:tag:ocr",
+      "total_cases": 30,
+      "auto_decided_cases": 27,
+      "need_review_cases": 3,
+      "accuracy": 0.9,
+      "auto_accuracy": 1.0,
+      "coverage": 0.9,
+      "route_accuracy": 0.9,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.1,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 12,
+          "reject": 0,
+          "need_review": 3
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 15,
+          "need_review": 0
+        }
+      },
+      "error_counts": {
+        "unexpected_review": 3
+      }
+    },
+    "tag:risky_query": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:tag:risky_query",
+      "total_cases": 16,
+      "auto_decided_cases": 15,
+      "need_review_cases": 1,
+      "accuracy": 0.9375,
+      "auto_accuracy": 1.0,
+      "coverage": 0.9375,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 0.9375,
+      "f1": 0.967741935483871,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.0625,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 15,
+          "need_review": 1
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:rotated": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:tag:rotated",
+      "total_cases": 12,
+      "auto_decided_cases": 10,
+      "need_review_cases": 2,
+      "accuracy": 0.8333333333333334,
+      "auto_accuracy": 1.0,
+      "coverage": 0.8333333333333334,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.16666666666666666,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 5,
+          "reject": 0,
+          "need_review": 2
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 5,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:second_hand": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:tag:second_hand",
+      "total_cases": 8,
+      "auto_decided_cases": 8,
+      "need_review_cases": 0,
+      "accuracy": 1.0,
+      "auto_accuracy": 1.0,
+      "coverage": 1.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 8,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:shadow": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:tag:shadow",
+      "total_cases": 60,
+      "auto_decided_cases": 40,
+      "need_review_cases": 20,
+      "accuracy": 0.6666666666666666,
+      "auto_accuracy": 1.0,
+      "coverage": 0.6666666666666666,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 0.8333333333333334,
+      "f1": 0.9090909090909091,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.3333333333333333,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 15,
+          "reject": 0,
+          "need_review": 15
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 25,
+          "need_review": 5
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:shop_impersonation": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:tag:shop_impersonation",
+      "total_cases": 15,
+      "auto_decided_cases": 14,
+      "need_review_cases": 1,
+      "accuracy": 0.9333333333333333,
+      "auto_accuracy": 1.0,
+      "coverage": 0.9333333333333333,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 0.9333333333333333,
+      "f1": 0.9655172413793104,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.06666666666666667,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 14,
+          "need_review": 1
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:tiny_text": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:tag:tiny_text",
+      "total_cases": 7,
+      "auto_decided_cases": 5,
+      "need_review_cases": 2,
+      "accuracy": 0.7142857142857143,
+      "auto_accuracy": 1.0,
+      "coverage": 0.7142857142857143,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.2857142857142857,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 2
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 5,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:trademark_misuse": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:tag:trademark_misuse",
+      "total_cases": 15,
+      "auto_decided_cases": 11,
+      "need_review_cases": 4,
+      "accuracy": 0.7333333333333333,
+      "auto_accuracy": 1.0,
+      "coverage": 0.7333333333333333,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 0.7333333333333333,
+      "f1": 0.846153846153846,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.26666666666666666,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 11,
+          "need_review": 4
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:unbranded": {
+      "eval_run_id": "EV-DAY7-PRODUCTION-OFFLINE-V1:tag:unbranded",
+      "total_cases": 11,
+      "auto_decided_cases": 8,
+      "need_review_cases": 3,
+      "accuracy": 0.7272727272727273,
+      "auto_accuracy": 1.0,
+      "coverage": 0.7272727272727273,
+      "route_accuracy": 0.7272727272727273,
+      "policy_accuracy": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.2727272727272727,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 8,
+          "reject": 0,
+          "need_review": 3
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        }
+      },
+      "error_counts": {
+        "unexpected_review": 3
+      }
+    }
+  },
+  "gates": {
+    "min_auto_accuracy": 0.98,
+    "min_route_accuracy": 0.95,
+    "min_coverage": 0.75,
+    "min_policy_accuracy": 0.98,
+    "max_false_approve_rate": 0.0,
+    "max_false_reject_rate": 0.0
+  },
+  "failed_gates": []
+}

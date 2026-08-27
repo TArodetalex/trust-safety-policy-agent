@@ -1,0 +1,78 @@
+{
+  "manifest_version": "v1.0.0",
+  "baseline_id": "EV-DAY7-PRODUCTION-OFFLINE-V1",
+  "frozen_on": "2026-08-27",
+  "engine": "production",
+  "prompt_version": "production-routing-v1.0.0:offline",
+  "retrieval_version": "policy_chunks_v1",
+  "dataset": {
+    "path": "data/golden_set/golden_set_v4.csv",
+    "dataset_version": "v4.0.0",
+    "schema_version": "1.2.0",
+    "sha256": "85b2b2b518ece23c4cda164dd2e63b4bdfec3de5a16d4212ee4a31c0640c82f5",
+    "normalized_fingerprint": "sha256:a69024c57e02ceb20eb60ee6ecc8b1aa32d91b2b9681614a178d9e85519c3f33"
+  },
+  "policy": {
+    "path": "data/policies/mock_policy_v1.md",
+    "sha256": "3f8a2dcab7fa38cf5781f7fcee734deea0f14492e7df4af958191d105c91b288"
+  },
+  "gates": {
+    "path": "config/evaluation_gates_day7_v1.json",
+    "sha256": "3ea5c1f1b1084b8880e8d841f25b55d4c93a1643d756837a6ae512111743a5b0"
+  },
+  "artifacts": [
+    {
+      "path": "config/production_routing_v1.json",
+      "sha256": "bb16cb2a174f0f9ab54e54b682049fc68cdbf540c8a899661c74664998b00d7c"
+    },
+    {
+      "path": "config/shadow_evaluation_gates_v1.json",
+      "sha256": "1b6396091e59084b8bcdafebf47aadacf2f6f4a54a2e6aaa1565c77a63ac3f1c"
+    },
+    {
+      "path": "src/trust_safety_agent/dataset.py",
+      "sha256": "e31b4aa4d9b716c9416137ccbdb53d7e3c0f6d8007869ea070a429f09f9c5f5a"
+    },
+    {
+      "path": "src/trust_safety_agent/llm_client.py",
+      "sha256": "e0865181ec95848e9b5de8b49bf10b6cfd2afef565e28c5a0b647932e63c52fb"
+    },
+    {
+      "path": "src/trust_safety_agent/shadow_evaluation.py",
+      "sha256": "17ef5a78d4d697083cafcf5bb52d52e85cd9c838db455a49dcb2d42672a90faf"
+    },
+    {
+      "path": "scripts/run_evaluation.py",
+      "sha256": "9a49e9c62fa013a1bfb7bc3fb89e557374ba562209550eb87e7773e69f3778c3"
+    },
+    {
+      "path": "scripts/build_golden_set_v4.py",
+      "sha256": "1fd6b14a72c5a8a68ff9e490a7487bab5d8e40266805247922c42e7f097e25c3"
+    },
+    {
+      "path": "data/golden_set/plans/golden_set_v4_plan.json",
+      "sha256": "6a52e0461bd9d57e77c8d04465788961e896a26712d8562f914012f3d14eb06b"
+    },
+    {
+      "path": "data/golden_set/assets/v4/asset_manifest.csv",
+      "sha256": "8a8f347b8fd8b62e1cc856df2880315cbfcde5befb033372df2e7e74916232df"
+    },
+    {
+      "path": "data/golden_set/splits/v4/split_manifest.json",
+      "sha256": "9936c2af0c5e29844d4cebae57d4fc0193bb30401678c6c6cdcd097fb712a48c"
+    }
+  ],
+  "expected_metrics": {
+    "total_cases": 210,
+    "auto_decided_cases": 162,
+    "need_review_cases": 48,
+    "accuracy": 0.7714285714285715,
+    "auto_accuracy": 1.0,
+    "coverage": 0.7714285714285715,
+    "route_accuracy": 0.9857142857142858,
+    "policy_accuracy": 1.0,
+    "false_approve_rate": 0.0,
+    "false_reject_rate": 0.0
+  },
+  "report_path": "data/eval_runs/EV-DAY7-PRODUCTION-OFFLINE-V1/report.json"
+}

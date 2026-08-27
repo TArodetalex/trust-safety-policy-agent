@@ -1,0 +1,26 @@
+{
+  "manifest_version": "v1.0.0",
+  "dataset_version": "v4.0.0",
+  "full": {
+    "path": "data/golden_set/golden_set_v4.csv",
+    "count": 210,
+    "sha256": "85b2b2b518ece23c4cda164dd2e63b4bdfec3de5a16d4212ee4a31c0640c82f5"
+  },
+  "tuning": {
+    "path": "data/golden_set/splits/v4/golden_set_v4_tuning.csv",
+    "count": 150,
+    "sha256": "c5d33adc3cef12c766bc208b2c1fd994e4d059b17bc4eda6c2fe7d9391bbb693"
+  },
+  "blind": {
+    "path": "data/golden_set/splits/v4/blind_set_v2.csv",
+    "count": 60,
+    "sha256": "70a79cf79be85ef8941007659c1bd455de947003c43fab88c0c0cf816d7df526"
+  },
+  "new_visual_cases": 60,
+  "new_blind_visual_cases": 20,
+  "invariants": {
+    "tuning_and_blind_are_disjoint": true,
+    "tuning_union_blind_equals_full": true,
+    "blind_content_requires_restricted_access": true
+  }
+}

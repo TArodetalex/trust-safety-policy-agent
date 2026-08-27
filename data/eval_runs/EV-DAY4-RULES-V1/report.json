@@ -1,0 +1,950 @@
+{
+  "schema_version": "1.1.0",
+  "eval_run_id": "EV-DAY4-RULES-V1",
+  "generated_at": "2026-08-26T07:45:14.268416Z",
+  "dataset_version": "v2.0.0",
+  "dataset_fingerprint": "sha256:9a9da7103cb4d3eccd06eaff2ae11ed9ccb39f4119a72f9ec7826bb66bfdd274",
+  "engine": "rules",
+  "prompt_version": "rules-v1",
+  "retrieval_version": "policy_chunks_v1",
+  "metrics": {
+    "eval_run_id": "EV-DAY4-RULES-V1",
+    "total_cases": 70,
+    "auto_decided_cases": 60,
+    "need_review_cases": 10,
+    "accuracy": 0.8571428571428571,
+    "auto_accuracy": 1.0,
+    "coverage": 0.8571428571428571,
+    "route_accuracy": 1.0,
+    "policy_accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 0.8529411764705882,
+    "f1": 0.9206349206349206,
+    "false_reject_rate": 0.0,
+    "false_approve_rate": 0.0,
+    "review_rate": 0.14285714285714285,
+    "confusion_matrix": {
+      "approve": {
+        "approve": 31,
+        "reject": 0,
+        "need_review": 5
+      },
+      "reject": {
+        "approve": 0,
+        "reject": 29,
+        "need_review": 5
+      }
+    },
+    "error_counts": {}
+  },
+  "slices": {
+    "boundary:boundary": {
+      "eval_run_id": "EV-DAY4-RULES-V1:boundary:boundary",
+      "total_cases": 47,
+      "auto_decided_cases": 37,
+      "need_review_cases": 10,
+      "accuracy": 0.7872340425531915,
+      "auto_accuracy": 1.0,
+      "coverage": 0.7872340425531915,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 0.6153846153846154,
+      "f1": 0.761904761904762,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.2127659574468085,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 29,
+          "reject": 0,
+          "need_review": 5
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 8,
+          "need_review": 5
+        }
+      },
+      "error_counts": {}
+    },
+    "boundary:non_boundary": {
+      "eval_run_id": "EV-DAY4-RULES-V1:boundary:non_boundary",
+      "total_cases": 23,
+      "auto_decided_cases": 23,
+      "need_review_cases": 0,
+      "accuracy": 1.0,
+      "auto_accuracy": 1.0,
+      "coverage": 1.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 2,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 21,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "content_type:product": {
+      "eval_run_id": "EV-DAY4-RULES-V1:content_type:product",
+      "total_cases": 36,
+      "auto_decided_cases": 27,
+      "need_review_cases": 9,
+      "accuracy": 0.75,
+      "auto_accuracy": 1.0,
+      "coverage": 0.75,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 0.7142857142857143,
+      "f1": 0.8333333333333333,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.25,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 17,
+          "reject": 0,
+          "need_review": 5
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 10,
+          "need_review": 4
+        }
+      },
+      "error_counts": {}
+    },
+    "content_type:query": {
+      "eval_run_id": "EV-DAY4-RULES-V1:content_type:query",
+      "total_cases": 11,
+      "auto_decided_cases": 11,
+      "need_review_cases": 0,
+      "accuracy": 1.0,
+      "auto_accuracy": 1.0,
+      "coverage": 1.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 3,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 8,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "content_type:shop_avatar": {
+      "eval_run_id": "EV-DAY4-RULES-V1:content_type:shop_avatar",
+      "total_cases": 4,
+      "auto_decided_cases": 4,
+      "need_review_cases": 0,
+      "accuracy": 1.0,
+      "auto_accuracy": 1.0,
+      "coverage": 1.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 2,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 2,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "content_type:shop_name": {
+      "eval_run_id": "EV-DAY4-RULES-V1:content_type:shop_name",
+      "total_cases": 8,
+      "auto_decided_cases": 7,
+      "need_review_cases": 1,
+      "accuracy": 0.875,
+      "auto_accuracy": 1.0,
+      "coverage": 0.875,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 0.8333333333333334,
+      "f1": 0.9090909090909091,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.125,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 2,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 5,
+          "need_review": 1
+        }
+      },
+      "error_counts": {}
+    },
+    "content_type:video": {
+      "eval_run_id": "EV-DAY4-RULES-V1:content_type:video",
+      "total_cases": 11,
+      "auto_decided_cases": 11,
+      "need_review_cases": 0,
+      "accuracy": 1.0,
+      "auto_accuracy": 1.0,
+      "coverage": 1.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 7,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 4,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "risk:high": {
+      "eval_run_id": "EV-DAY4-RULES-V1:risk:high",
+      "total_cases": 32,
+      "auto_decided_cases": 27,
+      "need_review_cases": 5,
+      "accuracy": 0.84375,
+      "auto_accuracy": 1.0,
+      "coverage": 0.84375,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 0.84375,
+      "f1": 0.9152542372881356,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.15625,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 27,
+          "need_review": 5
+        }
+      },
+      "error_counts": {}
+    },
+    "risk:low": {
+      "eval_run_id": "EV-DAY4-RULES-V1:risk:low",
+      "total_cases": 31,
+      "auto_decided_cases": 31,
+      "need_review_cases": 0,
+      "accuracy": 1.0,
+      "auto_accuracy": 1.0,
+      "coverage": 1.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 31,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "risk:medium": {
+      "eval_run_id": "EV-DAY4-RULES-V1:risk:medium",
+      "total_cases": 7,
+      "auto_decided_cases": 2,
+      "need_review_cases": 5,
+      "accuracy": 0.2857142857142857,
+      "auto_accuracy": 1.0,
+      "coverage": 0.2857142857142857,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.7142857142857143,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 5
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 2,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "route:auto_decide": {
+      "eval_run_id": "EV-DAY4-RULES-V1:route:auto_decide",
+      "total_cases": 60,
+      "auto_decided_cases": 60,
+      "need_review_cases": 0,
+      "accuracy": 1.0,
+      "auto_accuracy": 1.0,
+      "coverage": 1.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 31,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 29,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "route:human_review": {
+      "eval_run_id": "EV-DAY4-RULES-V1:route:human_review",
+      "total_cases": 10,
+      "auto_decided_cases": 0,
+      "need_review_cases": 10,
+      "accuracy": 0.0,
+      "auto_accuracy": 0.0,
+      "coverage": 0.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 1.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 5
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 5
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:brand_only": {
+      "eval_run_id": "EV-DAY4-RULES-V1:tag:brand_only",
+      "total_cases": 10,
+      "auto_decided_cases": 0,
+      "need_review_cases": 10,
+      "accuracy": 0.0,
+      "auto_accuracy": 0.0,
+      "coverage": 0.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 1.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 5
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 5
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:co_brand": {
+      "eval_run_id": "EV-DAY4-RULES-V1:tag:co_brand",
+      "total_cases": 1,
+      "auto_decided_cases": 1,
+      "need_review_cases": 0,
+      "accuracy": 1.0,
+      "auto_accuracy": 1.0,
+      "coverage": 1.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 1,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:compatibility": {
+      "eval_run_id": "EV-DAY4-RULES-V1:tag:compatibility",
+      "total_cases": 1,
+      "auto_decided_cases": 1,
+      "need_review_cases": 0,
+      "accuracy": 1.0,
+      "auto_accuracy": 1.0,
+      "coverage": 1.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 1,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:conflicting_signals": {
+      "eval_run_id": "EV-DAY4-RULES-V1:tag:conflicting_signals",
+      "total_cases": 1,
+      "auto_decided_cases": 0,
+      "need_review_cases": 1,
+      "accuracy": 0.0,
+      "auto_accuracy": 0.0,
+      "coverage": 0.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 1.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 1
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:counterfeit": {
+      "eval_run_id": "EV-DAY4-RULES-V1:tag:counterfeit",
+      "total_cases": 1,
+      "auto_decided_cases": 1,
+      "need_review_cases": 0,
+      "accuracy": 1.0,
+      "auto_accuracy": 1.0,
+      "coverage": 1.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 1,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:evasion": {
+      "eval_run_id": "EV-DAY4-RULES-V1:tag:evasion",
+      "total_cases": 1,
+      "auto_decided_cases": 1,
+      "need_review_cases": 0,
+      "accuracy": 1.0,
+      "auto_accuracy": 1.0,
+      "coverage": 1.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 1,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:exemption": {
+      "eval_run_id": "EV-DAY4-RULES-V1:tag:exemption",
+      "total_cases": 5,
+      "auto_decided_cases": 5,
+      "need_review_cases": 0,
+      "accuracy": 1.0,
+      "auto_accuracy": 1.0,
+      "coverage": 1.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 5,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:explicit_signal": {
+      "eval_run_id": "EV-DAY4-RULES-V1:tag:explicit_signal",
+      "total_cases": 4,
+      "auto_decided_cases": 4,
+      "need_review_cases": 0,
+      "accuracy": 1.0,
+      "auto_accuracy": 1.0,
+      "coverage": 1.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 4,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:incidental_exposure": {
+      "eval_run_id": "EV-DAY4-RULES-V1:tag:incidental_exposure",
+      "total_cases": 1,
+      "auto_decided_cases": 1,
+      "need_review_cases": 0,
+      "accuracy": 1.0,
+      "auto_accuracy": 1.0,
+      "coverage": 1.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 1,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:insufficient_context": {
+      "eval_run_id": "EV-DAY4-RULES-V1:tag:insufficient_context",
+      "total_cases": 10,
+      "auto_decided_cases": 0,
+      "need_review_cases": 10,
+      "accuracy": 0.0,
+      "auto_accuracy": 0.0,
+      "coverage": 0.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 1.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 5
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 5
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:legacy_v1": {
+      "eval_run_id": "EV-DAY4-RULES-V1:tag:legacy_v1",
+      "total_cases": 50,
+      "auto_decided_cases": 50,
+      "need_review_cases": 0,
+      "accuracy": 1.0,
+      "auto_accuracy": 1.0,
+      "coverage": 1.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 25,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 25,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:meaningful_word": {
+      "eval_run_id": "EV-DAY4-RULES-V1:tag:meaningful_word",
+      "total_cases": 1,
+      "auto_decided_cases": 1,
+      "need_review_cases": 0,
+      "accuracy": 1.0,
+      "auto_accuracy": 1.0,
+      "coverage": 1.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 1,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:negative_control": {
+      "eval_run_id": "EV-DAY4-RULES-V1:tag:negative_control",
+      "total_cases": 1,
+      "auto_decided_cases": 1,
+      "need_review_cases": 0,
+      "accuracy": 1.0,
+      "auto_accuracy": 1.0,
+      "coverage": 1.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 1,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:risky_query": {
+      "eval_run_id": "EV-DAY4-RULES-V1:tag:risky_query",
+      "total_cases": 1,
+      "auto_decided_cases": 1,
+      "need_review_cases": 0,
+      "accuracy": 1.0,
+      "auto_accuracy": 1.0,
+      "coverage": 1.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 1,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:second_hand": {
+      "eval_run_id": "EV-DAY4-RULES-V1:tag:second_hand",
+      "total_cases": 1,
+      "auto_decided_cases": 1,
+      "need_review_cases": 0,
+      "accuracy": 1.0,
+      "auto_accuracy": 1.0,
+      "coverage": 1.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 1,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:shop_impersonation": {
+      "eval_run_id": "EV-DAY4-RULES-V1:tag:shop_impersonation",
+      "total_cases": 1,
+      "auto_decided_cases": 1,
+      "need_review_cases": 0,
+      "accuracy": 1.0,
+      "auto_accuracy": 1.0,
+      "coverage": 1.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 1,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:trademark_misuse": {
+      "eval_run_id": "EV-DAY4-RULES-V1:tag:trademark_misuse",
+      "total_cases": 1,
+      "auto_decided_cases": 1,
+      "need_review_cases": 0,
+      "accuracy": 1.0,
+      "auto_accuracy": 1.0,
+      "coverage": 1.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 1,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    },
+    "tag:unbranded": {
+      "eval_run_id": "EV-DAY4-RULES-V1:tag:unbranded",
+      "total_cases": 1,
+      "auto_decided_cases": 1,
+      "need_review_cases": 0,
+      "accuracy": 1.0,
+      "auto_accuracy": 1.0,
+      "coverage": 1.0,
+      "route_accuracy": 1.0,
+      "policy_accuracy": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "false_reject_rate": 0.0,
+      "false_approve_rate": 0.0,
+      "review_rate": 0.0,
+      "confusion_matrix": {
+        "approve": {
+          "approve": 1,
+          "reject": 0,
+          "need_review": 0
+        },
+        "reject": {
+          "approve": 0,
+          "reject": 0,
+          "need_review": 0
+        }
+      },
+      "error_counts": {}
+    }
+  },
+  "gates": {
+    "min_auto_accuracy": 0.95,
+    "min_route_accuracy": 0.9,
+    "min_coverage": 0.8,
+    "max_false_approve_rate": 0.02,
+    "max_false_reject_rate": 0.02
+  },
+  "failed_gates": []
+}
