@@ -17,6 +17,10 @@ evaluation, and bad-case analysis rather than generic document chat.
 - Evaluation reports, confusion matrices, slices, error buckets, and quality gates
 - Frozen Day 4-7 baselines and versioned dataset quota governance
 
+See
+[`docs/project_progress_optimization_report.md`](docs/project_progress_optimization_report.md)
+for the current delivery assessment, production gaps, priorities, and roadmap.
+
 ## Project Layout
 
 ```text
