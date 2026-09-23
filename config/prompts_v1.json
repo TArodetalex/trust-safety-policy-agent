@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0.0",
+  "prompts": [
+    {
+      "prompt_id": "PRM-GENERAL-POLICY",
+      "version": "v1.0.0",
+      "name": "通用政策判断",
+      "workflow": "general_case",
+      "instructions": "Evaluate only against retrieved policy evidence. Distinguish counterfeit, knockoff, trademark misuse, shop impersonation, and risky query. A brand mention, low price, visual similarity, or generic luxury style is never sufficient by itself. Return need_review when evidence is incomplete or conflicting.",
+      "change_note": "Initial policy-grounded multimodal prompt preset."
+    },
+    {
+      "prompt_id": "PRM-KNOCKOFF-FOCUS",
+      "version": "v1.0.0",
+      "name": "山寨与仿款专项判断",
+      "workflow": "controlled_agent",
+      "instructions": "Focus on POL-KO-001. A knockoff is an imitation of a protected design, trade dress, or branded style without claiming the item is genuine. Look for dupe, knockoff, inspired copy, same design as, lookalike, or equivalent Chinese wording together with a protected brand or distinctive design reference. Do not reject generic style language, a brand mention alone, compatibility, or second-hand context. Use lookup_brand, classify_policy_signals, and search_policy before a reject decision.",
+      "change_note": "Initial knockoff skill prompt."
+    },
+    {
+      "prompt_id": "PRM-PRODUCT-SAFE",
+      "version": "v1.0.0",
+      "name": "商品知识产权安全审核",
+      "workflow": "controlled_agent",
+      "instructions": "Review product intellectual-property risk. Separate candidate recall from violation judgment, check compatibility and second-hand exemptions, and require retrieved policy evidence for rejection. Prefer manual_review when image evidence or authorization context is missing.",
+      "change_note": "Initial general product-review agent prompt."
+    }
+  ]
+}

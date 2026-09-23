@@ -1,0 +1,11 @@
+brand_name,aliases,region,policy_category,status,is_common_word,notes
+Gucci,古驰,global,trademark_misuse,active,false,Luxury fashion controlled brand
+Nike,耐克,global,trademark_misuse,active,false,Sportswear controlled brand
+Apple,苹果|iPhone|iPad|MacBook,global,trademark_misuse,active,true,Apple can also be an ordinary word
+Samsung,三星,global,trademark_misuse,active,false,Consumer electronics controlled brand
+Louis Vuitton,LV|路易威登,global,trademark_misuse,active,false,Luxury fashion controlled brand
+Chanel,香奈儿,global,trademark_misuse,active,false,Luxury fashion controlled brand
+Rolex,劳力士,global,trademark_misuse,active,false,Luxury watch controlled brand
+Adidas,阿迪达斯,global,trademark_misuse,active,false,Sportswear controlled brand
+GE,General Electric,global,trademark_misuse,watchlist,true,Short alias requires contextual validation
+Coach,蔻驰,global,trademark_misuse,active,true,Coach can also be an ordinary word

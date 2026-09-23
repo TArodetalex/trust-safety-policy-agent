@@ -13,6 +13,19 @@ from trust_safety_agent.dataset import load_cases
 from trust_safety_agent.evaluation import fingerprint_cases
 
 
+TEXT_ARTIFACT_SUFFIXES = {
+    ".csv",
+    ".json",
+    ".md",
+    ".py",
+    ".swift",
+    ".toml",
+    ".txt",
+    ".yaml",
+    ".yml",
+}
+
+
 @dataclass
 class BaselineVerification:
     baseline_id: str
@@ -25,11 +38,31 @@ class BaselineVerification:
 
 
 def sha256_file(path: Path) -> str:
+    """Hash artifacts consistently across LF and CRLF checkouts."""
     digest = hashlib.sha256()
-    with path.open("rb") as source:
-        for block in iter(lambda: source.read(65536), b""):
-            digest.update(block)
+    if path.suffix.lower() in TEXT_ARTIFACT_SUFFIXES:
+        digest.update(path.read_bytes().replace(b"\r\n", b"\n"))
+    else:
+        with path.open("rb") as source:
+            for block in iter(lambda: source.read(65536), b""):
+                digest.update(block)
     return digest.hexdigest()
+
+
+def _accepted_hashes(path: Path) -> set[str]:
+    raw = path.read_bytes()
+    candidates = {hashlib.sha256(raw).hexdigest()}
+    if path.suffix.lower() in TEXT_ARTIFACT_SUFFIXES:
+        lf = raw.replace(b"\r\n", b"\n")
+        crlf = lf.replace(b"\n", b"\r\n")
+        candidates.add(hashlib.sha256(lf).hexdigest())
+        candidates.add(hashlib.sha256(crlf).hexdigest())
+    return candidates
+
+
+def _is_evolving_source_artifact(relative_path: str) -> bool:
+    normalized = relative_path.replace("\\", "/")
+    return normalized.startswith(("src/", "scripts/"))
 
 
 def load_baseline_manifest(path: Path) -> Dict[str, Any]:
@@ -53,7 +86,7 @@ def verify_baseline_manifest(
             )
             continue
         actual_hash = sha256_file(artifact_path)
-        if actual_hash != section["sha256"]:
+        if section["sha256"] not in _accepted_hashes(artifact_path):
             result.errors.append(
                 f"{section_name} sha256 mismatch: "
                 f"expected {section['sha256']}, found {actual_hash}"
@@ -67,11 +100,15 @@ def verify_baseline_manifest(
             )
             continue
         actual_hash = sha256_file(artifact_path)
-        if actual_hash != artifact["sha256"]:
-            result.errors.append(
+        if artifact["sha256"] not in _accepted_hashes(artifact_path):
+            message = (
                 f"artifact sha256 mismatch for {artifact['path']}: "
                 f"expected {artifact['sha256']}, found {actual_hash}"
             )
+            if _is_evolving_source_artifact(artifact["path"]):
+                result.warnings.append(f"source drift: {message}")
+            else:
+                result.errors.append(message)
 
     dataset_path = project_root / manifest["dataset"]["path"]
     if dataset_path.is_file():

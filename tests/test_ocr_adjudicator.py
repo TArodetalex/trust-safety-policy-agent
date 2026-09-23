@@ -2,8 +2,11 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 from trust_safety_agent.adjudicator import PolicyAdjudicator
 from trust_safety_agent.ocr_adjudicator import (
+    MacOSVisionOCR,
     OCRPolicyAdjudicator,
     OCRResult,
     OCRUnavailableError,
@@ -121,3 +124,14 @@ def test_low_confidence_or_failed_ocr_routes_to_review(tmp_path: Path) -> None:
 
     assert low_decision.decision == AgentDecisionLabel.NEED_REVIEW
     assert failed_decision.decision == AgentDecisionLabel.NEED_REVIEW
+
+
+def test_macos_vision_ocr_fails_closed_outside_macos(
+    monkeypatch,
+    tmp_path: Path,
+) -> None:
+    monkeypatch.setattr("platform.system", lambda: "Windows")
+    extractor = MacOSVisionOCR(tmp_path / "macos_vision_ocr.swift")
+
+    with pytest.raises(OCRUnavailableError, match="only available on macOS"):
+        extractor._binary_path()

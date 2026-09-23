@@ -4,14 +4,17 @@ build-backend = "hatchling.build"
 
 [project]
 name = "trust-safety-policy-agent"
-version = "0.1.0"
-description = "Policy-grounded trust and safety case adjudication and evaluation."
+version = "0.2.0"
+description = "Controlled AI decision, evaluation, and MCP lab for trust and safety."
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
   "chromadb>=0.5,<2",
+  "mcp>=2,<3",
+  "openpyxl>=3.1,<4",
   "Pillow>=10,<12",
   "pydantic>=2.7,<3",
+  "python-dotenv>=1,<2",
   "streamlit>=1.50,<2",
 ]
 

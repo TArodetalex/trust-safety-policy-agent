@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0.0",
+  "skills": [
+    {
+      "skill_id": "SKL-KNOCKOFF-REVIEW",
+      "version": "v1.0.0",
+      "name": "Knockoff 专项审核",
+      "description": "识别品牌设计仿款，同时排除泛风格描述、兼容和二手语境。",
+      "workflow": "controlled_agent",
+      "prompt_id": "PRM-KNOCKOFF-FOCUS",
+      "prompt_version": "v1.0.0",
+      "allowed_tools": ["lookup_brand", "classify_policy_signals", "search_policy"],
+      "policy_scope": ["POL-KO-001", "POL-EX-001"],
+      "max_steps": 4,
+      "output_contract": "AgentRunResult"
+    },
+    {
+      "skill_id": "SKL-PRODUCT-IPR",
+      "version": "v1.0.0",
+      "name": "商品知识产权综合审核",
+      "description": "组合品牌查询、确定性商品审核、政策信号分类和政策检索。",
+      "workflow": "controlled_agent",
+      "prompt_id": "PRM-PRODUCT-SAFE",
+      "prompt_version": "v1.0.0",
+      "allowed_tools": ["lookup_brand", "review_product", "classify_policy_signals", "search_policy"],
+      "policy_scope": ["POL-CF-001", "POL-KO-001", "POL-TM-001", "POL-EX-001"],
+      "max_steps": 4,
+      "output_contract": "AgentRunResult"
+    },
+    {
+      "skill_id": "SKL-GENERAL-POLICY",
+      "version": "v1.0.0",
+      "name": "通用多模态政策审核",
+      "description": "为通用案例审核提供政策分类、证据和安全降级指令。",
+      "workflow": "general_case",
+      "prompt_id": "PRM-GENERAL-POLICY",
+      "prompt_version": "v1.0.0",
+      "allowed_tools": [],
+      "policy_scope": ["POL-CF-001", "POL-KO-001", "POL-TM-001", "POL-SI-001", "POL-RQ-001", "POL-EX-001"],
+      "max_steps": 1,
+      "output_contract": "LLMDecisionDraft"
+    }
+  ]
+}

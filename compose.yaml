@@ -13,13 +13,51 @@ services:
       LLM_API_BASE: "${LLM_API_BASE:-https://api.openai.com/v1}"
       LLM_MODEL: "${LLM_MODEL:-gpt-4o-mini}"
       LLM_TIMEOUT_SECONDS: "${LLM_TIMEOUT_SECONDS:-60}"
+      LLM_RESPONSE_FORMAT: "${LLM_RESPONSE_FORMAT:-auto}"
+      LLM_FALLBACK_MODELS: "${LLM_FALLBACK_MODELS:-}"
       LLM_REQUIRE_PARAMETERS: "${LLM_REQUIRE_PARAMETERS:-true}"
       LLM_ALLOW_FALLBACKS: "${LLM_ALLOW_FALLBACKS:-false}"
       LLM_PROVIDER_ORDER: "${LLM_PROVIDER_ORDER:-}"
     volumes:
       - policy-chroma:/app/data/chroma
+      - review-data:/app/data/reviewer
+      - staging-data:/app/data/golden_set/staging
+      - trace-data:/app/data/traces
+      - prompt-data:/app/data/prompt_studio
+    security_opt:
+      - no-new-privileges:true
+
+  policy-mcp:
+    profiles: ["mcp"]
+    build:
+      context: .
+    image: trust-safety-policy-agent:local
+    init: true
+    command: ["python", "-m", "trust_safety_agent.mcp_server"]
+    ports:
+      - "${MCP_PORT:-8000}:8000"
+    environment:
+      APP_ROOT: /app
+      POLICY_DB_PATH: /app/data/chroma
+      MCP_TRANSPORT: streamable-http
+      MCP_HOST: 0.0.0.0
+      MCP_PORT: 8000
+    volumes:
+      - policy-chroma:/app/data/chroma
+      - review-data:/app/data/reviewer
+      - prompt-data:/app/data/prompt_studio
+    healthcheck:
+      test: ["CMD", "python", "-c", "import socket; s=socket.create_connection(('127.0.0.1', 8000), 3); s.close()"]
+      interval: 30s
+      timeout: 5s
+      start_period: 15s
+      retries: 3
     security_opt:
       - no-new-privileges:true
 
 volumes:
   policy-chroma:
+  review-data:
+  staging-data:
+  trace-data:
+  prompt-data:

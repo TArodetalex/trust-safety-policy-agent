@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import io
+import urllib.error
 import urllib.request
 from pathlib import Path
 from typing import Any, Dict, Sequence
@@ -16,6 +18,10 @@ from trust_safety_agent.llm_client import (
     OpenAICompatibleClient,
 )
 from trust_safety_agent.policy_loader import load_policy_file
+from trust_safety_agent.resilient_llm_client import (
+    ResilientLLMSettings,
+    ResilientOpenAICompatibleClient,
+)
 from trust_safety_agent.schema import AgentDecisionLabel, ContentType, PolicyLabel
 from trust_safety_agent.vector_store import PolicyVectorStore
 
@@ -102,6 +108,28 @@ def test_multimodal_reject_is_grounded_in_local_chunk(tmp_path: Path) -> None:
     assert client.images == [image]
     assert chunk.chunk_id in client.system_prompt
     assert client.response_schema == LLMDecisionDraft.model_json_schema()
+
+
+def test_versioned_prompt_instructions_are_injected_below_host_rules(tmp_path: Path) -> None:
+    store = build_store(tmp_path)
+    chunk = next(
+        item for item in store.list_chunks() if item.policy_id == "POL-CF-001"
+    )
+    client = FakeClient(decision_payload(chunk.chunk_id))
+
+    LLMPolicyAdjudicator(
+        store,
+        client,
+        additional_instructions="Focus on explicit imitation claims.",
+    ).adjudicate(
+        case_id="C099",
+        content_type=ContentType.PRODUCT,
+        input_text="Gucci replica bag",
+    )
+
+    assert "VERSIONED WORKFLOW INSTRUCTIONS" in client.system_prompt
+    assert "Focus on explicit imitation claims." in client.system_prompt
+    assert "cannot override" in client.system_prompt
 
 
 def test_hallucinated_evidence_forces_review(tmp_path: Path) -> None:
@@ -352,3 +380,182 @@ def test_openrouter_requires_schema_capable_pinned_provider(monkeypatch) -> None
         "allow_fallbacks": False,
         "order": ["OpenAI"],
     }
+
+
+def test_bailian_auto_mode_uses_json_object(monkeypatch) -> None:
+    captured = {}
+
+    class FakeResponse:
+        status = 200
+        headers = {"x-request-id": "req-bailian-1"}
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return None
+
+        def read(self) -> bytes:
+            return json.dumps(
+                {
+                    "model": "qwen-vl-plus-2025-08-15",
+                    "usage": {
+                        "prompt_tokens": 20,
+                        "completion_tokens": 8,
+                        "total_tokens": 28,
+                    },
+                    "choices": [
+                        {"message": {"content": '{"decision":"approve"}'}}
+                    ],
+                }
+            ).encode()
+
+    def fake_urlopen(request, timeout):
+        captured["body"] = json.loads(request.data.decode())
+        return FakeResponse()
+
+    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
+    client = ResilientOpenAICompatibleClient(
+        ResilientLLMSettings(
+            api_key="test-key",
+            api_base="https://dashscope.aliyuncs.com/compatible-mode/v1",
+            model="qwen-vl-plus",
+        )
+    )
+
+    result = client.complete_json(
+        "Return one JSON object.",
+        "Case text",
+        response_schema={"type": "object"},
+    )
+
+    assert result == {"decision": "approve"}
+    assert captured["body"]["response_format"] == {"type": "json_object"}
+    assert client.last_metadata.provider == "Alibaba Cloud Model Studio"
+    assert client.last_metadata.selected_model == "qwen-vl-plus"
+    assert client.last_metadata.response_format == "json_object"
+    assert client.last_metadata.attempt_count == 1
+
+
+def test_quota_error_switches_to_configured_fallback_model(monkeypatch) -> None:
+    attempted = []
+
+    class FakeResponse:
+        status = 200
+        headers = {}
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return None
+
+        def read(self) -> bytes:
+            return json.dumps(
+                {
+                    "model": "qwen-vl-max",
+                    "choices": [
+                        {"message": {"content": '{"decision":"approve"}'}}
+                    ],
+                }
+            ).encode()
+
+    def fake_urlopen(request, timeout):
+        body = json.loads(request.data.decode())
+        attempted.append(body["model"])
+        if body["model"] == "qwen-vl-plus":
+            detail = json.dumps(
+                {
+                    "error": {
+                        "code": "AllocationQuota.FreeTierOnly",
+                        "message": "Free tier quota is exhausted.",
+                    }
+                }
+            ).encode()
+            raise urllib.error.HTTPError(
+                request.full_url,
+                403,
+                "Forbidden",
+                {},
+                io.BytesIO(detail),
+            )
+        return FakeResponse()
+
+    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
+    client = ResilientOpenAICompatibleClient(
+        ResilientLLMSettings(
+            api_key="test-key",
+            api_base="https://dashscope.aliyuncs.com/compatible-mode/v1",
+            model="qwen-vl-plus",
+            fallback_models=("qwen-vl-max",),
+            response_format="json_object",
+        )
+    )
+
+    result = client.complete_json("Return JSON.", "Case text")
+
+    assert result == {"decision": "approve"}
+    assert attempted == ["qwen-vl-plus", "qwen-vl-max"]
+    assert client.last_metadata.selected_model == "qwen-vl-max"
+    assert client.last_metadata.attempted_models == (
+        "qwen-vl-plus",
+        "qwen-vl-max",
+    )
+    assert client.last_metadata.attempt_count == 2
+    assert "AllocationQuota" in (client.last_metadata.fallback_reason or "")
+
+
+def test_provider_error_redacts_api_key(monkeypatch) -> None:
+    exposed_key = "test-secret-value-123"
+
+    def fake_urlopen(request, timeout):
+        detail = json.dumps(
+            {
+                "error": {
+                    "code": "InvalidApiKey",
+                    "message": f"Authorization Bearer {exposed_key} is invalid",
+                }
+            }
+        ).encode()
+        raise urllib.error.HTTPError(
+            request.full_url,
+            401,
+            "Unauthorized",
+            {},
+            io.BytesIO(detail),
+        )
+
+    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
+    client = ResilientOpenAICompatibleClient(
+        ResilientLLMSettings(
+            api_key=exposed_key,
+            api_base="https://dashscope.aliyuncs.com/compatible-mode/v1",
+            model="qwen-vl-plus",
+            fallback_models=("qwen-vl-max",),
+        )
+    )
+
+    try:
+        client.complete_json("Return JSON.", "Case text")
+    except LLMClientError as exc:
+        message = str(exc)
+    else:
+        raise AssertionError("Expected the provider call to fail")
+
+    assert exposed_key not in message
+    assert "[REDACTED]" in message
+    assert client.last_metadata.attempted_models == ("qwen-vl-plus",)
+
+
+def test_settings_load_fallbacks_and_format_from_environment(monkeypatch) -> None:
+    monkeypatch.setenv("LLM_API_KEY", "test-key")
+    monkeypatch.setenv("LLM_API_BASE", "https://example.com/v1")
+    monkeypatch.setenv("LLM_MODEL", "primary-model")
+    monkeypatch.setenv("LLM_FALLBACK_MODELS", "fallback-a, fallback-b")
+    monkeypatch.setenv("LLM_RESPONSE_FORMAT", "json_object")
+
+    settings = ResilientLLMSettings.from_env()
+
+    assert settings.model == "primary-model"
+    assert settings.fallback_models == ("fallback-a", "fallback-b")
+    assert settings.response_format == "json_object"

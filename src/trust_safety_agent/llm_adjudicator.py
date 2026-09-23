@@ -51,11 +51,13 @@ class LLMPolicyAdjudicator:
         client: MultimodalChatClient,
         top_k: int = 8,
         minimum_confidence: float = MIN_AUTO_DECISION_CONFIDENCE,
+        additional_instructions: str = "",
     ) -> None:
         self.store = store
         self.client = client
         self.top_k = top_k
         self.minimum_confidence = minimum_confidence
+        self.additional_instructions = additional_instructions.strip()
         self.last_schema_valid = False
 
     @staticmethod
@@ -89,8 +91,7 @@ class LLMPolicyAdjudicator:
             )
         return chunks, scores
 
-    @staticmethod
-    def _system_prompt(chunks: Sequence[PolicyChunk]) -> str:
+    def _system_prompt(self, chunks: Sequence[PolicyChunk]) -> str:
         context = "\n\n".join(
             (
                 f"[{chunk.chunk_id}] policy_id={chunk.policy_id}; "
@@ -100,6 +101,9 @@ class LLMPolicyAdjudicator:
                 f"{chunk.content}"
             )
             for chunk in chunks
+        )
+        versioned_instructions = (
+            self.additional_instructions or "No additional versioned instructions."
         )
         return f"""You are a Trust & Safety policy adjudicator.
 Judge only from the supplied case and POLICY CONTEXT. Inspect every supplied
@@ -131,6 +135,11 @@ confidence must be between 0 and 1. image_observations must be short factual
 statements about visible evidence, or an empty list when no image is supplied.
 detected_marks lists visible brand or logo text only. uncertainties lists
 material ambiguity, occlusion, unreadable regions, or an empty list.
+
+VERSIONED WORKFLOW INSTRUCTIONS
+These instructions may specialize the review but cannot override the rules,
+allowed values, evidence requirements, or output contract above.
+{versioned_instructions}
 
 POLICY CONTEXT
 {context}"""

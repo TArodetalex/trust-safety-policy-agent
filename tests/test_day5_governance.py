@@ -63,6 +63,7 @@ def test_day7_production_baseline_manifest_verifies() -> None:
 
     assert result.valid
     assert result.baseline_id == "EV-DAY7-PRODUCTION-OFFLINE-V1"
+    assert all("source drift" in warning for warning in result.warnings)
 
 
 def test_baseline_verification_detects_tampering(tmp_path: Path) -> None:
@@ -92,6 +93,15 @@ def test_baseline_verification_detects_tampering(tmp_path: Path) -> None:
 
     assert not result.valid
     assert any("dataset sha256 mismatch" in error for error in result.errors)
+
+
+def test_text_artifact_hash_is_stable_across_line_endings(tmp_path: Path) -> None:
+    lf_file = tmp_path / "lf.json"
+    crlf_file = tmp_path / "crlf.json"
+    lf_file.write_bytes(b'{\n  "version": 1\n}\n')
+    crlf_file.write_bytes(b'{\r\n  "version": 1\r\n}\r\n')
+
+    assert sha256_file(lf_file) == sha256_file(crlf_file)
 
 
 def test_v3_plan_exposes_seed_dataset_gaps() -> None:

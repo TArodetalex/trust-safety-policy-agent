@@ -1,8 +1,9 @@
-# Trust & Safety Policy Agent
+# Trust & Safety AI Decision Lab
 
-A policy-grounded case adjudication and regression evaluation system. The
-project is intentionally structured around case decisions, evidence, Golden Set
-evaluation, and bad-case analysis rather than generic document chat.
+A controlled AI decision, evaluation, and MCP interoperability lab grounded in
+a Trust & Safety use case. The project demonstrates how a product workflow can
+combine policy retrieval, model-selected tools, deterministic guardrails,
+human review, and reproducible evaluation rather than stopping at a chat UI.
 
 ## Current Status
 
@@ -12,14 +13,29 @@ evaluation, and bad-case analysis rather than generic document chat.
 - Structure-aware Markdown policy parsing with stable chunk IDs
 - Offline reproducible embeddings and persistent Chroma retrieval
 - Policy-grounded single-case adjudication with evidence and review fallback
+- Controlled Brand Library and deterministic Product IPR review pipeline
+- Shop Identity review with authorization-first gating
+- Validated Product/Shop CSV and Excel batch import and export
+- Reviewer Workspace with separate Agent, Reviewer, and Final decisions
+- Golden Set staging plus explicit v5 promotion and SHA-256 manifest
+- Structured redacted traces and deterministic failure taxonomy
 - Strict JSON Schema multimodal inference with provider telemetry
-- Streamlit workspace with case decisions, Top-K search, and chunk preview
+- Chinese-first Streamlit workspace with case, product, retrieval, and chunk views
+- Alibaba Cloud Bailian fallback, redacted errors, metadata, and smoke testing
+- Bounded schema-driven Tool Calling Agent with allowlists and step limits
+- Versioned Prompt & Skill Studio with editable prompts and runtime capability bundles
+- AI Evaluation Lab for reproducible run creation and baseline/candidate diffs
+- Official MCP Python SDK server with tools, resources, prompt, and two transports
 - Evaluation reports, confusion matrices, slices, error buckets, and quality gates
 - Frozen Day 4-7 baselines and versioned dataset quota governance
 
 See
 [`docs/project_progress_optimization_report.md`](docs/project_progress_optimization_report.md)
 for the current delivery assessment, production gaps, priorities, and roadmap.
+See [`docs/phase0_phase1_execution_report.md`](docs/phase0_phase1_execution_report.md)
+for the verified Phase 0/API/Phase 1 implementation record and claim boundary.
+See [`docs/phase2_phase5_evidence_report.md`](docs/phase2_phase5_evidence_report.md)
+for the Phase 2-5 workflows, examples, verification evidence, and limitations.
 
 ## Project Layout
 
@@ -29,6 +45,8 @@ trust-safety-policy-agent/
 ├── assets/                        # Screenshots and architecture diagrams
 ├── data/
 │   ├── baselines/                 # Frozen baseline manifests
+│   ├── brands/                    # Versioned controlled-brand library
+│   ├── examples/                  # Product and Shop batch examples
 │   ├── eval_runs/                 # Generated evaluation outputs
 │   ├── golden_set/
 │   │   ├── golden_set_v1.csv
@@ -52,6 +70,20 @@ trust-safety-policy-agent/
 │   ├── __init__.py
 │   ├── config.py
 │   ├── adjudicator.py
+│   ├── brand_library.py
+│   ├── product_review.py
+│   ├── shop_identity.py
+│   ├── batch_io.py
+│   ├── reviewer_workspace.py
+│   ├── staging_dataset.py
+│   ├── trace.py
+│   ├── trace_builders.py
+│   ├── failure_taxonomy.py
+│   ├── controlled_tools.py
+│   ├── controlled_agent.py
+│   ├── prompt_skills.py
+│   ├── evaluation_lab.py
+│   ├── mcp_server.py
 │   ├── llm_adjudicator.py
 │   ├── llm_client.py
 │   ├── embeddings.py
@@ -84,7 +116,8 @@ docker compose up --build -d
 ```
 
 Open `http://localhost:8501`. The Chroma index is persisted in the
-`policy-chroma` Docker volume.
+`policy-chroma` Docker volume. Reviewer records, staging candidates, and traces
+use separate Docker volumes and are not committed to Git.
 
 For multimodal inference, copy `.env.example` to `.env`, configure a new API
 key and model, then restart:
@@ -94,6 +127,10 @@ docker compose up --build -d
 docker compose logs -f policy-agent
 ```
 
+For Alibaba Cloud Model Studio (Bailian), including safe local key handling,
+structured-output compatibility, controlled model fallback, and the one-call
+smoke test, see [`docs/bailian_setup.md`](docs/bailian_setup.md).
+
 Use `APP_PORT` to expose a different host port:
 
 ```bash
@@ -102,6 +139,20 @@ APP_PORT=8080 docker compose up -d
 
 Stop the service with `docker compose down`. Add `--volumes` only when the
 persisted policy index should also be deleted.
+
+## Platform Compatibility
+
+Text rules, policy retrieval, evaluation, and the Streamlit workspace run on
+Windows, macOS, and Linux. The bundled local OCR helper uses Apple's Vision
+framework and therefore runs only on macOS. On Windows and in the Linux Docker
+image, image cases continue to the configured multimodal model; without a
+configured model they fail closed to human review. This changes offline image
+coverage, not the safety contract.
+
+Use a multimodal provider for image review on Windows. Keep the API key in an
+environment variable or an ignored `.env` file; never commit it. Frozen
+baseline verification normalizes text line endings so LF and CRLF checkouts
+produce the same artifact hashes.
 
 ## Build the Policy KB
 
@@ -137,6 +188,129 @@ python scripts/adjudicate_case.py \
 The Streamlit sidebar accepts the same API settings for the current browser
 session. Uploaded images are sent to that configured endpoint and are not
 persisted by this project.
+
+## Run a Product IPR Review
+
+Open the `商品知识产权审核` tab in the Streamlit app. This workflow uses the
+versioned Controlled Brand Library in `data/brands/controlled_brands_v1.csv`
+and keeps these stages independently inspectable:
+
+1. Candidate recall from the seller brand field, title, description, OCR text,
+   and supplied visual marks.
+2. Boundary-safe matching against controlled brand names and aliases.
+3. Context validation for counterfeit language, compatibility, second-hand
+   sales, and ambiguous common-word brands.
+4. Policy retrieval and an auditable `approve`, `reject`, or `manual_review`
+   recommendation with reviewer checkpoints.
+
+A brand match is not treated as proof of infringement. Image submissions that
+do not include reliable OCR or visual marks route to manual review.
+
+## Batch and Human Review
+
+The Chinese-first Streamlit workspace includes dedicated views for Product IPR,
+Shop Identity, batch review, human review, traces, policy retrieval, and policy
+chunks. Batch review accepts UTF-8 CSV or `.xlsx`, validates required columns,
+URLs, duplicate IDs, empty files, and malformed rows, then exports filtered
+results as CSV or Excel.
+
+Example inputs:
+
+- `data/examples/product_review_batch.csv`
+- `data/examples/shop_identity_batch.csv`
+
+Shop authorization is evaluated before identity risk. A verified `authorized`
+status produces an authorization exemption; `unknown` is never treated as
+authorized. Avatar URLs are not treated as visual evidence unless reliable
+visual marks are supplied.
+
+Reviewer records preserve `agent_decision`, `reviewer_label`, and
+`final_decision` separately. Human-confirmed cases may enter the staging
+dataset, but the frozen Golden Set v4 is never modified. An explicit Promote
+action creates a separate v5 JSONL file and SHA-256 manifest.
+
+Execution traces record workflow nodes, sanitized summaries, outputs, status,
+latency, optional token usage, confidence, and errors. Keys, tokens, passwords,
+credentials, and Bearer values are recursively redacted before a trace is
+saved. New evaluation runs include `failure_counts` and a separate
+`failure_report.json`.
+
+## Controlled Agent
+
+The `受控 Agent` workspace uses the configured model as a planner. On each turn
+the model must either select one typed tool or return a final decision. The host
+enforces a tool allowlist, Pydantic input validation, a four-step limit,
+duplicate-call blocking, read/write separation, and a final evidence guardrail.
+The model cannot directly execute arbitrary code or write to the review queue.
+
+The planner accepts a narrow set of common OpenAI-compatible JSON tool-call
+shapes and normalizes them before strict validation. A reject is allowed only
+when a successful tool returned the same policy ID. Low-confidence, malformed,
+repeated, unauthorized, or unevidenced actions fail closed to human review.
+
+### How a knockoff decision is made
+
+The demo deliberately keeps three layers separate:
+
+1. The offline baseline uses explicit, testable signals. A knockoff candidate
+   requires an imitation phrase such as `dupe`, `knockoff`, `inspired copy`, or
+   `same design as`, together with a protected-brand reference. It then grounds
+   the result in `POL-KO-001`; a brand mention alone is not enough.
+2. The multimodal case workflow sends retrieved policy chunks plus a versioned
+   Prompt to the configured model. Code validates the returned schema, policy
+   evidence, exemption, and confidence before accepting the decision.
+3. The controlled Agent selects typed tools such as
+   `classify_policy_signals`, while the selected Skill restricts its Prompt,
+   tool allowlist, policy scope, maximum steps, and output contract.
+
+The `Prompt 与 Skill` workspace displays all built-in versions and can append
+custom versions to ignored local JSONL files. Temporary Prompt edits affect
+only that browser submission. Product IPR and Shop Identity remain
+deterministic pipelines; they do not expose decorative Prompt fields because
+those workflows do not call a model.
+
+Run one live call without printing the key:
+
+```bash
+python scripts/smoke_controlled_agent.py
+```
+
+## AI Evaluation Lab
+
+The `评测实验室` workspace indexes versioned evaluation artifacts under
+`data/eval_runs`. It can launch a new deterministic Golden Set v4 rules run and
+compare any baseline/candidate pair across quality, routing, review rate,
+failed gates, tokens, cost, and latency when those telemetry fields exist.
+
+This separates a model or Prompt change from a release decision: every result
+keeps its engine, Prompt version, retrieval version, dataset fingerprint, and
+quality-gate outcome.
+
+## MCP Integration
+
+`trust_safety_agent.mcp_server` is built with the official MCP Python SDK. It
+publishes six tools (`search_policy`, `lookup_brand`,
+`classify_policy_signals`, `review_product`, `get_review_queue`, and guarded
+`submit_human_review`), two resources, and one review prompt. Type hints become
+protocol schemas and successful tool results are returned as structured MCP
+content.
+
+Verify a real stdio subprocess handshake, discovery, resource listing, and tool
+call:
+
+```bash
+python scripts/smoke_mcp.py
+```
+
+Start the optional Streamable HTTP service with Docker:
+
+```bash
+docker compose --profile mcp up --build -d policy-mcp
+```
+
+The endpoint is `http://localhost:8000/mcp` by default. The write tool requires
+both caller-side write permission and an explicit `user_confirmed=true`; read
+tools never receive the LLM API key.
 
 Run the deterministic offline fallback:
 

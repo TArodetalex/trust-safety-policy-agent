@@ -1,0 +1,4 @@
+case_id,product_id,title,description,image_url,optional_brand_field,optional_category,ocr_text,visual_marks
+PR-B001,SKU-B001,Gucci 手提包,1:1 mirror copy,,Gucci,箱包,,
+PR-B002,SKU-B002,手机充电线,Compatible with Apple iPhone 15,,,3C数码,,
+PR-B003,SKU-B003,皮革手提包,无品牌通用商品,,,,,

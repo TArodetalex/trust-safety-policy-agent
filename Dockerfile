@@ -16,6 +16,7 @@ FROM python:3.11-slim-bookworm AS runtime
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    APP_ROOT=/app \
     POLICY_DB_PATH=/app/data/chroma \
     STREAMLIT_SERVER_ADDRESS=0.0.0.0 \
     STREAMLIT_SERVER_PORT=8501 \
@@ -33,7 +34,15 @@ RUN python -m pip install --no-cache-dir /wheels/*.whl \
 
 COPY --chown=app:app . .
 RUN mkdir -p /app/data/chroma \
-    && chown -R app:app /app/data/chroma
+        /app/data/reviewer \
+        /app/data/golden_set/staging \
+        /app/data/prompt_studio \
+        /app/data/traces \
+    && chown -R app:app /app/data/chroma \
+        /app/data/reviewer \
+        /app/data/golden_set/staging \
+        /app/data/prompt_studio \
+        /app/data/traces
 
 USER app
 

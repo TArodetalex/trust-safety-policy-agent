@@ -1,0 +1,4 @@
+case_id,shop_name,avatar_url,controlled_brand,authorization_status,avatar_visual_marks
+SHOP-B001,Gucci Official Store,,Gucci,unauthorized,
+SHOP-B002,Nike 授权店,https://example.com/nike.png,Nike,authorized,Nike logo
+SHOP-B003,Apple Juice Market,,Apple,unknown,

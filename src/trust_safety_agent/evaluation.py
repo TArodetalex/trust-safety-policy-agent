@@ -13,6 +13,10 @@ from pathlib import Path
 from typing import Callable, Dict, Iterable, List, Optional, Sequence, Tuple
 from uuid import uuid4
 
+from trust_safety_agent.failure_taxonomy import (
+    aggregate_failures,
+    classify_evaluation_failure,
+)
 from trust_safety_agent.schema import (
     AgentDecision,
     AgentDecisionLabel,
@@ -118,7 +122,7 @@ def _record_for_decision(
         decision_correct,
         policy_correct,
     )
-    return EvaluationRecord(
+    record = EvaluationRecord(
         eval_run_id=eval_run_id,
         case_id=case.case_id,
         prompt_version=prompt_version,
@@ -144,6 +148,9 @@ def _record_for_decision(
         error_type=error_type,
         latency_ms=latency_ms,
     )
+    return record.model_copy(
+        update={"failure_type": classify_evaluation_failure(record)}
+    )
 
 
 def _invalid_record(
@@ -154,7 +161,7 @@ def _invalid_record(
     latency_ms: int,
     error: Exception,
 ) -> EvaluationRecord:
-    return EvaluationRecord(
+    record = EvaluationRecord(
         eval_run_id=eval_run_id,
         case_id=case.case_id,
         prompt_version=prompt_version,
@@ -176,6 +183,9 @@ def _invalid_record(
         agent_reason=f"{type(error).__name__}: {error}"[:2000],
         error_type=ErrorType.INVALID_OUTPUT,
         latency_ms=latency_ms,
+    )
+    return record.model_copy(
+        update={"failure_type": classify_evaluation_failure(record)}
     )
 
 
@@ -253,6 +263,7 @@ def calculate_metrics(
         for record in records
         if record.error_type != ErrorType.NONE
     )
+    failure_counts = aggregate_failures(records).failure_counts
     return EvaluationMetrics(
         eval_run_id=eval_run_id,
         total_cases=total,
@@ -274,6 +285,7 @@ def calculate_metrics(
         review_rate=_safe_ratio(review_count, total),
         confusion_matrix=confusion,
         error_counts=dict(sorted(errors.items())),
+        failure_counts=failure_counts,
     )
 
 
@@ -424,6 +436,7 @@ def write_evaluation_artifacts(
     report_path = output_directory / "report.json"
     records_path = output_directory / "records.jsonl"
     errors_path = output_directory / "errors.csv"
+    failure_report_path = output_directory / "failure_report.json"
     record_list = list(records)
 
     report_path.write_text(
@@ -432,6 +445,10 @@ def write_evaluation_artifacts(
     )
     records_path.write_text(
         "\n".join(record.model_dump_json() for record in record_list) + "\n",
+        encoding="utf-8",
+    )
+    failure_report_path.write_text(
+        aggregate_failures(record_list).model_dump_json(indent=2),
         encoding="utf-8",
     )
     error_rows = [
@@ -443,6 +460,7 @@ def write_evaluation_artifacts(
         fieldnames = [
             "case_id",
             "error_type",
+            "failure_type",
             "human_decision",
             "expected_policy",
             "agent_decision",
@@ -460,6 +478,7 @@ def write_evaluation_artifacts(
                 {
                     "case_id": record.case_id,
                     "error_type": record.error_type.value,
+                    "failure_type": record.failure_type.value,
                     "human_decision": record.human_decision.value,
                     "expected_policy": (
                         record.expected_policy.value
@@ -481,4 +500,5 @@ def write_evaluation_artifacts(
         "report": report_path,
         "records": records_path,
         "errors": errors_path,
+        "failure_report": failure_report_path,
     }

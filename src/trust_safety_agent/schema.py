@@ -86,6 +86,20 @@ class ErrorType(StringEnum):
     UNSAFE_AUTO_DECISION = "unsafe_auto_decision"
 
 
+class FailureType(StringEnum):
+    NONE = "none"
+    INPUT_MISSING = "input_missing"
+    CANDIDATE_RECALL_MISS = "candidate_recall_miss"
+    RETRIEVAL_MISS = "retrieval_miss"
+    EVIDENCE_MISS = "evidence_miss"
+    EXEMPTION_MISS = "exemption_miss"
+    POLICY_MISREAD = "policy_misread"
+    SCHEMA_ERROR = "schema_error"
+    ROUTING_ERROR = "routing_error"
+    LOW_CONFIDENCE = "low_confidence"
+    UNKNOWN = "unknown"
+
+
 class PolicyChunk(StrictModel):
     """One retrievable policy unit with stable provenance metadata."""
 
@@ -220,6 +234,7 @@ class EvaluationRecord(StrictModel):
     agent_reason: str = ""
     evidence_chunk_ids: List[str] = Field(default_factory=list)
     error_type: ErrorType = ErrorType.NONE
+    failure_type: FailureType = FailureType.NONE
     latency_ms: int = Field(ge=0)
 
 
@@ -241,6 +256,7 @@ class EvaluationMetrics(StrictModel):
     review_rate: float = Field(ge=0, le=1)
     confusion_matrix: Dict[str, Dict[str, int]] = Field(default_factory=dict)
     error_counts: Dict[str, int] = Field(default_factory=dict)
+    failure_counts: Dict[str, int] = Field(default_factory=dict)
 
 
 class EvaluationReport(StrictModel):
