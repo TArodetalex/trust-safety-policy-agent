@@ -5,6 +5,7 @@
 __pycache__/
 .pytest_cache/
 *.py[cod]
+.streamlit/*.log
 data/eval_runs/*
 !data/eval_runs/.gitkeep
 !data/eval_runs/EV-DAY4-RULES-V1/
@@ -27,3 +28,10 @@ data/golden_set/v5/*.jsonl
 data/golden_set/v5/*manifest.json
 data/traces/*.jsonl
 data/prompt_studio/*.jsonl
+data/case_store/runtime/*.jsonl
+data/runs/*.jsonl
+data/bad_cases/*.jsonl
+data/reviewer_prompts/*.jsonl
+data/workflow_releases/*.jsonl
+data/knowledge_uploads/*
+data/model_experiments/*.jsonl

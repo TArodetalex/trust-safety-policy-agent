@@ -39,6 +39,45 @@
       "policy_scope": ["POL-CF-001", "POL-KO-001", "POL-TM-001", "POL-SI-001", "POL-RQ-001", "POL-EX-001"],
       "max_steps": 1,
       "output_contract": "LLMDecisionDraft"
+    },
+    {
+      "skill_id": "SKL-KNOCKOFF-REVIEW",
+      "version": "v2.0.0",
+      "name": "Knockoff 多模态专项审核",
+      "description": "区分精确 Logo、变形 Logo、独特外观和白牌仿款，并对视觉不确定性安全转人工。",
+      "workflow": "controlled_agent",
+      "prompt_id": "PRM-KNOCKOFF-FOCUS",
+      "prompt_version": "v2.0.0",
+      "allowed_tools": ["lookup_brand", "review_product", "classify_policy_signals", "search_policy"],
+      "policy_scope": ["POL-CF-001", "POL-KO-001", "POL-EX-001", "POL-ER-001"],
+      "max_steps": 4,
+      "output_contract": "AgentRunResult"
+    },
+    {
+      "skill_id": "SKL-PRODUCT-IPR",
+      "version": "v2.0.0",
+      "name": "商品知识产权综合审核 v2",
+      "description": "消费授权、信息层、商品实物和视觉关系字段，覆盖 Counterfeit、Knockoff、MBA 与 TMI。",
+      "workflow": "controlled_agent",
+      "prompt_id": "PRM-PRODUCT-SAFE",
+      "prompt_version": "v2.0.0",
+      "allowed_tools": ["lookup_brand", "review_product", "classify_policy_signals", "search_policy"],
+      "policy_scope": ["POL-CF-001", "POL-KO-001", "POL-MBA-001", "POL-TMI-001", "POL-TM-001", "POL-EX-001", "POL-ER-001"],
+      "max_steps": 4,
+      "output_contract": "AgentRunResult"
+    },
+    {
+      "skill_id": "SKL-GENERAL-POLICY",
+      "version": "v2.0.0",
+      "name": "通用多模态政策审核 v2",
+      "description": "使用合成政策 v2 和多模态证据边界进行结构化判断。",
+      "workflow": "general_case",
+      "prompt_id": "PRM-GENERAL-POLICY",
+      "prompt_version": "v2.0.0",
+      "allowed_tools": [],
+      "policy_scope": ["POL-CF-001", "POL-KO-001", "POL-MBA-001", "POL-TMI-001", "POL-TM-001", "POL-SI-001", "POL-RQ-001", "POL-EX-001", "POL-ER-001"],
+      "max_steps": 1,
+      "output_contract": "LLMDecisionDraft"
     }
   ]
 }

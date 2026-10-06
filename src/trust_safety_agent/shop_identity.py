@@ -89,8 +89,10 @@ _IMPERSONATION = re.compile(
     re.IGNORECASE,
 )
 _COMMON_CONTEXT = re.compile(
-    r"\b(apple\s+juice|fruit|coach(?:ing)?|bus|training)\b|"
-    r"苹果汁|水果|教练|培训|巴士",
+    r"\b(apple\s+juice|fruit|coach(?:ing)?|bus|training|"
+    r"snow\s+(?:handmade|craft|studio|winter)|winter\s+snow|"
+    r"snow(?:flake)?\b.*\b(?:handmade|craft|winter))\b|"
+    r"苹果汁|水果|教练|培训|巴士|雪景|冬季手作",
     re.IGNORECASE,
 )
 
@@ -193,6 +195,12 @@ class ShopIdentityReviewer:
                 evidence=marks,
                 confidence=ReviewConfidence.MEDIUM,
             )
+        if brand and brand.is_common_word and _COMMON_CONTEXT.search(marks):
+            return AvatarSignal(
+                signal_type=AvatarSignalType.UNRELATED_OBJECT,
+                evidence=marks,
+                confidence=ReviewConfidence.HIGH,
+            )
         if brand and any(
             normalize_brand_text(alias) in normalize_brand_text(marks)
             for alias in _aliases(brand)
@@ -213,10 +221,18 @@ class ShopIdentityReviewer:
             confidence=ReviewConfidence.LOW,
         )
 
-    def _policy_references(self, query: str) -> List[ProductPolicyReference]:
+    def _policy_references(
+        self,
+        query: str,
+        policy_ids: set[str] | None = None,
+    ) -> List[ProductPolicyReference]:
+        policy_ids = policy_ids or {"POL-SI-001"}
         references = []
-        for hit in self.store.retrieve(query, top_k=self.top_k):
-            if hit.chunk.policy_id != "POL-SI-001":
+        for hit in self.store.retrieve(
+            query,
+            top_k=max(self.top_k, min(self.store.count(), 20)),
+        ):
+            if hit.chunk.policy_id not in policy_ids:
                 continue
             references.append(
                 ProductPolicyReference(
@@ -246,6 +262,31 @@ class ShopIdentityReviewer:
                 confidence=ReviewConfidence.HIGH,
                 reason="授权状态已明确确认，品牌身份信号不再作为拒绝证据。",
                 reviewer_checkpoints=["核对授权资料的有效期、授权主体和适用店铺。"],
+            )
+
+        if (
+            name_signal.signal_type == ShopNameSignalType.MEANINGFUL_COMMON_WORD
+            and avatar_signal.signal_type
+            in {
+                AvatarSignalType.UNRELATED_OBJECT,
+                AvatarSignalType.INCIDENTAL_EXPOSURE,
+            }
+        ):
+            references = self._policy_references(
+                f"{item.shop_name} meaningful word ordinary dictionary context",
+                {"POL-EX-001"},
+            )
+            return ShopIdentityResult(
+                case_id=item.case_id,
+                controlled_brand=item.controlled_brand,
+                shop_name_signal=name_signal,
+                avatar_signal=avatar_signal,
+                authorization=item.authorization_status,
+                policy_references=references,
+                possible_exemptions=["meaningful_word"],
+                suggested_decision=ProductReviewDecision.APPROVE,
+                confidence=ReviewConfidence.HIGH,
+                reason="店名与头像均在普通词义语境中使用该词，未出现 Logo 或官方身份信号。",
             )
 
         strong_name = name_signal.signal_type == ShopNameSignalType.IMPERSONATION

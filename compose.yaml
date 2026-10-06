@@ -24,6 +24,12 @@ services:
       - staging-data:/app/data/golden_set/staging
       - trace-data:/app/data/traces
       - prompt-data:/app/data/prompt_studio
+      - case-data:/app/data/case_store/runtime
+      - run-data:/app/data/runs
+      - bad-case-data:/app/data/bad_cases
+      - reviewer-prompt-data:/app/data/reviewer_prompts
+      - model-experiment-data:/app/data/model_experiments
+      - workflow-release-data:/app/data/workflow_releases
     security_opt:
       - no-new-privileges:true
 
@@ -61,3 +67,9 @@ volumes:
   staging-data:
   trace-data:
   prompt-data:
+  case-data:
+  run-data:
+  bad-case-data:
+  reviewer-prompt-data:
+  model-experiment-data:
+  workflow-release-data:

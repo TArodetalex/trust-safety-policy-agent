@@ -27,6 +27,7 @@ class ControlledBrand(StrictModel):
     status: BrandStatus = BrandStatus.ACTIVE
     is_common_word: bool = False
     notes: str = Field(default="", max_length=500)
+    source_group: str = Field(default="public", pattern=r"^(public|synthetic)$")
 
     @model_validator(mode="after")
     def validate_aliases(self) -> "ControlledBrand":
@@ -100,6 +101,10 @@ class ControlledBrandLibrary:
                             row.get("is_common_word", "").casefold() == "true"
                         ),
                         notes=row.get("notes", ""),
+                        source_group=(
+                            row.get("source_group")
+                            or ("synthetic" if row.get("region") == "synthetic" else "public")
+                        ),
                     )
                 )
             except ValueError as exc:
@@ -107,6 +112,47 @@ class ControlledBrandLibrary:
                     f"invalid controlled brand row {row_number}: {exc}"
                 ) from exc
         return cls(brands)
+
+    @classmethod
+    def from_csv_and_knowledge(
+        cls,
+        csv_path: Path,
+        knowledge_path: Path,
+    ) -> "ControlledBrandLibrary":
+        """Build the published 50-brand set plus existing synthetic fixtures."""
+        from trust_safety_agent.brand_knowledge import load_brand_knowledge
+
+        existing = cls.from_csv(csv_path).brands
+        by_name = {normalize_brand_text(item.brand_name): item for item in existing}
+        public = []
+        for chunk in load_brand_knowledge(knowledge_path):
+            prior = by_name.get(normalize_brand_text(chunk.brand_name))
+            aliases = []
+            seen_aliases = {normalize_brand_text(chunk.brand_name)}
+            for alias in [*chunk.aliases, *(prior.aliases if prior else [])]:
+                normalized_alias = normalize_brand_text(alias)
+                if normalized_alias in seen_aliases:
+                    continue
+                seen_aliases.add(normalized_alias)
+                aliases.append(alias)
+            ambiguity = chunk.ambiguity_note.casefold()
+            public.append(
+                ControlledBrand(
+                    brand_name=chunk.brand_name,
+                    aliases=aliases,
+                    region="public_us",
+                    policy_category=PolicyLabel.TRADEMARK_MISUSE,
+                    status=BrandStatus.ACTIVE,
+                    is_common_word=any(
+                        marker in ambiguity
+                        for marker in ("ordinary", "personal name", "geographic", "verb")
+                    ),
+                    notes=f"Public knowledge record {chunk.chunk_id}",
+                    source_group="public",
+                )
+            )
+        synthetic = [item for item in existing if item.region == "synthetic"]
+        return cls([*public, *synthetic])
 
     def find_mentions(self, text: str) -> List[BrandMention]:
         mentions: List[BrandMention] = []

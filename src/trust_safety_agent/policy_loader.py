@@ -12,7 +12,7 @@ from trust_safety_agent.schema import ExemptionType, PolicyChunk, PolicyLabel
 
 
 POLICY_HEADING = re.compile(
-    r"^##\s+(?P<policy_id>POL-[A-Z]{2}-\d{3})\s+(?P<title>.+?)\s*$"
+    r"^##\s+(?P<policy_id>POL-[A-Z]{2,4}-\d{3})\s+(?P<title>.+?)\s*$"
 )
 SUBHEADING = re.compile(r"^###\s+(?P<title>.+?)\s*$")
 VERSION = re.compile(r"^Version:\s+`?(?P<version>v\d+\.\d+\.\d+)`?\s*$")
@@ -21,6 +21,8 @@ POLICY_LABELS: Dict[str, PolicyLabel] = {
     "POL-CF-001": PolicyLabel.COUNTERFEIT,
     "POL-KO-001": PolicyLabel.KNOCKOFF,
     "POL-TM-001": PolicyLabel.TRADEMARK_MISUSE,
+    "POL-MBA-001": PolicyLabel.TRADEMARK_MISUSE,
+    "POL-TMI-001": PolicyLabel.TRADEMARK_MISUSE,
     "POL-SI-001": PolicyLabel.SHOP_IMPERSONATION,
     "POL-RQ-001": PolicyLabel.RISKY_QUERY,
 }

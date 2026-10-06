@@ -105,7 +105,7 @@ class PolicyChunk(StrictModel):
 
     schema_version: str = Field(default=SCHEMA_VERSION)
     chunk_id: str = Field(pattern=r"^PCH-[a-f0-9]{12}$")
-    policy_id: str = Field(pattern=r"^POL-[A-Z]{2}-\d{3}$")
+    policy_id: str = Field(pattern=r"^POL-[A-Z]{2,4}-\d{3}$")
     title: Annotated[str, Field(min_length=1, max_length=200)]
     heading_path: List[str] = Field(min_length=1)
     source: Annotated[str, Field(min_length=1, max_length=500)]

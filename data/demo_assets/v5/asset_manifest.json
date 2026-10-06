@@ -1,0 +1,90 @@
+{
+  "dataset_version": "v5-candidate-1.0.0",
+  "generated_asset_count": 12,
+  "records": [
+    {
+      "case_image": "data/demo_assets/v5/CASE-V5-001.png",
+      "sha256": "803977e0eaf1a1e3f9e67500a6c25464fd2df62350b35907af5930b599518648",
+      "bytes": 2070086,
+      "generation_method": "OpenAI built-in image generation",
+      "contains_real_brand": false
+    },
+    {
+      "case_image": "data/demo_assets/v5/CASE-V5-002.png",
+      "sha256": "02d91775e46d3b8d86bfd86b901ea9c0224c898ea830e867eef1cb433f4ddced",
+      "bytes": 1824223,
+      "generation_method": "OpenAI built-in image generation",
+      "contains_real_brand": false
+    },
+    {
+      "case_image": "data/demo_assets/v5/CASE-V5-003.png",
+      "sha256": "99cc6f180b20158992f21a95c258b2d23643f518e4736c4b375a6df08e186d06",
+      "bytes": 2216150,
+      "generation_method": "OpenAI built-in image generation",
+      "contains_real_brand": false
+    },
+    {
+      "case_image": "data/demo_assets/v5/CASE-V5-004.png",
+      "sha256": "d25af22f58c1ea3a6a4260766abe23694ff2e5b8688f9156d3d8566caae56909",
+      "bytes": 2275188,
+      "generation_method": "OpenAI built-in image generation",
+      "contains_real_brand": false
+    },
+    {
+      "case_image": "data/demo_assets/v5/CASE-V5-005.png",
+      "sha256": "b2eb57ee46e3151480fab2ccacb4e9e6df09fd1c56c9af8aa17900d43832af22",
+      "bytes": 1463213,
+      "generation_method": "OpenAI built-in image generation",
+      "contains_real_brand": false
+    },
+    {
+      "case_image": "data/demo_assets/v5/CASE-V5-006.png",
+      "sha256": "c926a610a4ad372f279e1260ab7ab72cace3e2d64778f9e582388b82be5484cd",
+      "bytes": 1595558,
+      "generation_method": "OpenAI built-in image generation",
+      "contains_real_brand": false
+    },
+    {
+      "case_image": "data/demo_assets/v5/CASE-V5-007.png",
+      "sha256": "731656991a80b30831bf9bfd44768e310916c099904ce9d1a44ab3479479f182",
+      "bytes": 1923445,
+      "generation_method": "OpenAI built-in image generation",
+      "contains_real_brand": false
+    },
+    {
+      "case_image": "data/demo_assets/v5/CASE-V5-008.png",
+      "sha256": "0c2e1492b55d0e65a4e22604c040e69fae3c61fef6081aa019e811b541b5bb4e",
+      "bytes": 1613521,
+      "generation_method": "OpenAI built-in image generation",
+      "contains_real_brand": false
+    },
+    {
+      "case_image": "data/demo_assets/v5/CASE-V5-009.png",
+      "sha256": "b0a14db5f39adb3f1d983a2ed20e78ac8e73840f10f5774e6bda7051882178d9",
+      "bytes": 2017324,
+      "generation_method": "OpenAI built-in image generation",
+      "contains_real_brand": false
+    },
+    {
+      "case_image": "data/demo_assets/v5/CASE-V5-010.png",
+      "sha256": "fb35ab9d2cbc1cc6465f50ff50ca78dc22ea212db240eca647eb0c956b15f428",
+      "bytes": 503531,
+      "generation_method": "OpenAI built-in image generation",
+      "contains_real_brand": false
+    },
+    {
+      "case_image": "data/demo_assets/v5/CASE-V5-011.png",
+      "sha256": "9637122b4b4da8790da588c9a4456d8b46d2b961e0858528ddc3cb964d4ae87c",
+      "bytes": 804927,
+      "generation_method": "OpenAI built-in image generation",
+      "contains_real_brand": false
+    },
+    {
+      "case_image": "data/demo_assets/v5/CASE-V5-012.png",
+      "sha256": "4c5f211a5fdd901a7858efac497fba54ac93febd339945cf5a5ca8943f9fbce1",
+      "bytes": 1633934,
+      "generation_method": "OpenAI built-in image generation",
+      "contains_real_brand": false
+    }
+  ]
+}

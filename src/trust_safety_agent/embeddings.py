@@ -9,6 +9,7 @@ from typing import Iterable, List, Sequence, Tuple
 
 
 TOKEN_PATTERN = re.compile(r"[a-z0-9]+(?:[:'-][a-z0-9]+)*")
+CJK_SEQUENCE_PATTERN = re.compile(r"[\u3400-\u4dbf\u4e00-\u9fff]+")
 STOP_WORDS = {
     "a",
     "an",
@@ -42,7 +43,7 @@ class HashingEmbedder:
         if dimension < 64:
             raise ValueError("dimension must be at least 64")
         self.dimension = dimension
-        self.name = f"hashing-v1-{dimension}"
+        self.name = f"hashing-v2-cjk-{dimension}"
 
     def _features(self, text: str) -> Iterable[Tuple[str, float]]:
         tokens = [
@@ -57,6 +58,17 @@ class HashingEmbedder:
                     yield f"c:{token[offset:offset + 3]}", 0.2
         for left, right in zip(tokens, tokens[1:]):
             yield f"b:{left}_{right}", 1.4
+
+        # Chinese does not use whitespace word boundaries. Character bigrams
+        # provide a deterministic offline retrieval baseline without requiring
+        # a tokenizer or a network-hosted embedding model.
+        for sequence in CJK_SEQUENCE_PATTERN.findall(text):
+            for character in sequence:
+                yield f"zh1:{character}", 0.25
+            for offset in range(len(sequence) - 1):
+                yield f"zh2:{sequence[offset:offset + 2]}", 1.0
+            for offset in range(len(sequence) - 2):
+                yield f"zh3:{sequence[offset:offset + 3]}", 0.55
 
     def embed_query(self, text: str) -> List[float]:
         vector = [0.0] * self.dimension

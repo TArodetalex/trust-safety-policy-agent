@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 from typing import List, Optional
 
@@ -154,3 +155,65 @@ class PromptSkillRegistry:
             self.skills(),
             skill,
         )
+
+    @staticmethod
+    def next_patch_version(version: str) -> str:
+        match = re.fullmatch(r"v(\d+)\.(\d+)\.(\d+)", version)
+        if match is None:
+            raise ValueError(f"invalid semantic version: {version}")
+        major, minor, patch = (int(item) for item in match.groups())
+        return f"v{major}.{minor}.{patch + 1}"
+
+    def revise_prompt(
+        self,
+        source: PromptVersion,
+        *,
+        name: str,
+        instructions: str,
+        change_note: str,
+    ) -> PromptVersion:
+        version = self.next_patch_version(source.version)
+        while any(item.prompt_id == source.prompt_id and item.version == version for item in self.prompts()):
+            version = self.next_patch_version(version)
+        revised = PromptVersion(
+            prompt_id=source.prompt_id,
+            version=version,
+            name=name,
+            workflow=source.workflow,
+            instructions=instructions,
+            change_note=change_note,
+        )
+        self.save_prompt(revised)
+        return revised
+
+    def revise_skill(
+        self,
+        source: SkillDefinition,
+        *,
+        name: str,
+        description: str,
+        prompt_id: str,
+        prompt_version: str,
+        allowed_tools: List[str],
+        policy_scope: List[str],
+        max_steps: int,
+        output_contract: str,
+    ) -> SkillDefinition:
+        version = self.next_patch_version(source.version)
+        while any(item.skill_id == source.skill_id and item.version == version for item in self.skills()):
+            version = self.next_patch_version(version)
+        revised = SkillDefinition(
+            skill_id=source.skill_id,
+            version=version,
+            name=name,
+            description=description,
+            workflow=source.workflow,
+            prompt_id=prompt_id,
+            prompt_version=prompt_version,
+            allowed_tools=allowed_tools,
+            policy_scope=policy_scope,
+            max_steps=max_steps,
+            output_contract=output_contract,
+        )
+        self.save_skill(revised)
+        return revised

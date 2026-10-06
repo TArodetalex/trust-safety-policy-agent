@@ -52,12 +52,14 @@ class LLMPolicyAdjudicator:
         top_k: int = 8,
         minimum_confidence: float = MIN_AUTO_DECISION_CONFIDENCE,
         additional_instructions: str = "",
+        use_policy_rag: bool = True,
     ) -> None:
         self.store = store
         self.client = client
         self.top_k = top_k
         self.minimum_confidence = minimum_confidence
         self.additional_instructions = additional_instructions.strip()
+        self.use_policy_rag = use_policy_rag
         self.last_schema_valid = False
 
     @staticmethod
@@ -74,6 +76,8 @@ class LLMPolicyAdjudicator:
         input_text: str,
         has_images: bool,
     ) -> tuple[List[PolicyChunk], Dict[str, float]]:
+        if not self.use_policy_rag:
+            return [], {}
         query = input_text.strip() or (
             "Visual marketplace content with products, logos, brand identity, "
             "shop identity, authenticity, imitation, and exemptions"
@@ -306,7 +310,7 @@ POLICY CONTEXT
                 "No text or image was provided for policy assessment.",
             )
         chunks, scores = self._policy_context(input_text, bool(images))
-        if not chunks:
+        if not chunks and self.use_policy_rag:
             return self._review_decision(
                 case_id,
                 "The Policy KB is empty, so the case cannot be grounded.",

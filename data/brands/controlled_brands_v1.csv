@@ -9,3 +9,9 @@ Rolex,劳力士,global,trademark_misuse,active,false,Luxury watch controlled bra
 Adidas,阿迪达斯,global,trademark_misuse,active,false,Sportswear controlled brand
 GE,General Electric,global,trademark_misuse,watchlist,true,Short alias requires contextual validation
 Coach,蔻驰,global,trademark_misuse,active,true,Coach can also be an ordinary word
+Velora,,synthetic,trademark_misuse,active,false,Fictional Phase 8 demo brand
+Northline,,synthetic,trademark_misuse,active,false,Fictional Phase 8 demo brand
+Astria,,synthetic,trademark_misuse,active,false,Fictional Phase 8 demo brand
+Orbit,,synthetic,trademark_misuse,active,false,Fictional Phase 8 demo brand
+Aurora,,synthetic,trademark_misuse,active,false,Fictional Phase 8 device brand
+Snow,,synthetic,trademark_misuse,active,true,Fictional common-word demo brand

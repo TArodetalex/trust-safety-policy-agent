@@ -35,13 +35,19 @@ class TraceTokenUsage(StrictModel):
 
 class TraceNode(StrictModel):
     node_name: str = Field(min_length=1, max_length=100)
+    node_id: Optional[str] = Field(default=None, max_length=100)
+    node_version: str = Field(default="v1.0.0", max_length=30)
+    started_at: Optional[datetime] = None
+    ended_at: Optional[datetime] = None
     input_summary: Dict[str, Any] = Field(default_factory=dict)
     output: Dict[str, Any] = Field(default_factory=dict)
+    candidate_evidence: List[Dict[str, Any]] = Field(default_factory=list)
     status: TraceNodeStatus
     latency_ms: int = Field(ge=0)
     token_usage: Optional[TraceTokenUsage] = None
     confidence: Optional[float] = Field(default=None, ge=0, le=1)
     error: Optional[str] = Field(default=None, max_length=1000)
+    fallback_from: Optional[str] = Field(default=None, max_length=100)
 
     @model_validator(mode="after")
     def validate_error(self) -> "TraceNode":
@@ -54,6 +60,15 @@ class ExecutionTrace(StrictModel):
     trace_id: str = Field(pattern=r"^TRC-[A-F0-9]{12}$")
     case_id: str = Field(min_length=1, max_length=100)
     workflow: str = Field(min_length=1, max_length=100)
+    run_id: Optional[str] = Field(default=None, max_length=100)
+    parent_run_id: Optional[str] = Field(default=None, max_length=100)
+    case_revision: Optional[int] = Field(default=None, ge=1)
+    workflow_version: str = Field(default="v1.0.0", max_length=30)
+    prompt_version: str = Field(default="unknown", max_length=100)
+    skill_version: str = Field(default="unknown", max_length=100)
+    model_id: str = Field(default="offline-rules", max_length=200)
+    policy_index_version: str = Field(default="unknown", max_length=100)
+    brand_index_version: str = Field(default="unknown", max_length=100)
     nodes: List[TraceNode] = Field(default_factory=list)
     final_output: Dict[str, Any] = Field(default_factory=dict)
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))

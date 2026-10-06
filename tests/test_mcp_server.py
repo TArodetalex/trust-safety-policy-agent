@@ -42,6 +42,23 @@ def test_mcp_server_discovers_and_calls_structured_tool(tmp_path: Path):
             )
             assert not signal.is_error
             assert signal.structured_content["policy_label"] == "knockoff"
+            product = await client.call_tool(
+                "review_product",
+                {
+                    "case_id": "MCP-MBA-001",
+                    "title": "ASTRIA 银色头戴耳机",
+                    "description": "ASTRIA 品牌耳机",
+                    "optional_brand_field": "Astria",
+                    "observed_product_brand": "Astria",
+                    "visual_marks": ["exact Astria wordmark"],
+                    "brand_authorization_status": "unauthorized",
+                    "logo_match_type": "exact",
+                    "image_quality": "clear",
+                    "visual_confidence": 0.98,
+                },
+            )
+            assert not product.is_error
+            assert product.structured_content["risk_subtype"] == "missing_brand_authorization"
             resources = await client.list_resources()
             assert {str(item.uri) for item in resources.resources} == {
                 "policy://catalog",

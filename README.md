@@ -1,461 +1,198 @@
 # Trust & Safety AI Decision Lab
 
-A controlled AI decision, evaluation, and MCP interoperability lab grounded in
-a Trust & Safety use case. The project demonstrates how a product workflow can
-combine policy retrieval, model-selected tools, deterministic guardrails,
-human review, and reproducible evaluation rather than stopping at a chat UI.
+一个面向平台审核人员与策略运营人员的 AI 审核辅助工作台。项目以抽象化的平台治理场景为背景，将商家身份审核、商品知识产权审核、政策检索、人工复核和质量评测整合到同一套可运行流程中。
 
-## Current Status
+本项目是个人作品集 Demo，使用公开品牌信息、合成政策和合成案例，不包含任何公司内部政策、生产数据或真实用户信息。系统只提供风险建议与证据，不直接执行下架、封禁等平台处置。
 
-- Versioned data contract with backward-compatible v1 loading
-- Synthetic policy covering five violations and five exemptions
-- Golden Set v4 with 210 cases, 60 blind cases, and 90 multimodal fixtures
-- Structure-aware Markdown policy parsing with stable chunk IDs
-- Offline reproducible embeddings and persistent Chroma retrieval
-- Policy-grounded single-case adjudication with evidence and review fallback
-- Controlled Brand Library and deterministic Product IPR review pipeline
-- Shop Identity review with authorization-first gating
-- Validated Product/Shop CSV and Excel batch import and export
-- Reviewer Workspace with separate Agent, Reviewer, and Final decisions
-- Golden Set staging plus explicit v5 promotion and SHA-256 manifest
-- Structured redacted traces and deterministic failure taxonomy
-- Strict JSON Schema multimodal inference with provider telemetry
-- Chinese-first Streamlit workspace with case, product, retrieval, and chunk views
-- Alibaba Cloud Bailian fallback, redacted errors, metadata, and smoke testing
-- Bounded schema-driven Tool Calling Agent with allowlists and step limits
-- Versioned Prompt & Skill Studio with editable prompts and runtime capability bundles
-- AI Evaluation Lab for reproducible run creation and baseline/candidate diffs
-- Official MCP Python SDK server with tools, resources, prompt, and two transports
-- Evaluation reports, confusion matrices, slices, error buckets, and quality gates
-- Frozen Day 4-7 baselines and versioned dataset quota governance
+## 项目要解决的问题
 
-See
-[`docs/project_progress_optimization_report.md`](docs/project_progress_optimization_report.md)
-for the current delivery assessment, production gaps, priorities, and roadmap.
-See [`docs/phase0_phase1_execution_report.md`](docs/phase0_phase1_execution_report.md)
-for the verified Phase 0/API/Phase 1 implementation record and claim boundary.
-See [`docs/phase2_phase5_evidence_report.md`](docs/phase2_phase5_evidence_report.md)
-for the Phase 2-5 workflows, examples, verification evidence, and limitations.
+- 前置机审证据不足时，部分 Case 无法进入正式审核流程。
+- 简单审核任务仍需跨页面补充字段，操作链路较长。
+- 政策、品牌知识、Prompt 和审核结论分散，难以持续维护和追溯。
+- 模型结果缺少人工复核、问题归因和版本回退机制。
 
-## Project Layout
+项目将这些问题收敛为一套 AI 辅助审核产品：统一接收 Case 证据，自动路由商家或商品 Workflow，结合政策与品牌知识生成结构化建议，并在证据不足或结果冲突时转交人工。
+
+## 核心能力
+
+### 审核员工作台
+
+- **综合审核**：识别 Shop/Product Case，并拆分为独立审核任务。
+- **商家侧审核**：分别判断店铺名称与头像风险，校验品牌授权和 Meaningful Word 豁免。
+- **商品侧审核**：分析 Counterfeit、Knockoff、MBA 与 TMI，支持合法的多标签组合。
+- **我的 Prompt**：保存个人 Prompt 版本，对同一 Case 运行实验分析，不覆盖正式结果。
+- **Case 管理**：支持新增、修订、归档以及 CSV/Excel 导入导出。
+
+### 策略与 AI 运营工作台
+
+- 维护正式 Workflow、Prompt、Skill 及其发布版本。
+- 分别维护政策知识库与品牌商品知识库。
+- 查看 Agent Decision、Reviewer Decision 和 Final Decision。
+- 通过 Trace、Bad Case 和 Replay 定位问题首次发生的节点。
+- 使用固定数据与配置比较候选版本，保留发布和回退记录。
+
+### AI 与治理能力
+
+- 接入 OpenAI-compatible 多模态模型 API，并支持阿里云百炼模型配置。
+- Policy RAG 与 Brand/Product RAG 使用独立索引和版本。
+- Prompt、Skill、模型、Workflow 和知识库版本随运行记录保存。
+- 受控 Tool Calling 使用工具白名单、参数校验、步数限制和结果 Guardrail。
+- API Key、Authorization、Cookie、Token 和图片二进制不会写入 Trace。
+- Counterfeit 与 Knockoff 冲突、图片不可读或关键证据缺失时自动转人工。
+
+## 审核流程
+
+正式 Shop/Product Workflow 均在执行过程中记录节点，而不是在结果生成后拼接摘要：
 
 ```text
-trust-safety-policy-agent/
-├── app.py                         # Streamlit entry point (Day 2+)
-├── assets/                        # Screenshots and architecture diagrams
-├── data/
-│   ├── baselines/                 # Frozen baseline manifests
-│   ├── brands/                    # Versioned controlled-brand library
-│   ├── examples/                  # Product and Shop batch examples
-│   ├── eval_runs/                 # Generated evaluation outputs
-│   ├── golden_set/
-│   │   ├── golden_set_v1.csv
-│   │   ├── golden_set_v2.csv
-│   │   ├── golden_set_v3.csv
-│   │   ├── golden_set_v4.csv
-│   │   ├── assets/v3|v4/          # Hashed controlled image fixtures
-│   │   ├── splits/v3|v4/          # Tuning and blind views
-│   │   └── plans/                 # Versioned quotas and audit templates
-│   └── policies/
-│       └── mock_policy_v1.md
-├── docs/
-│   ├── annotation_guideline.md
-│   └── data_contract.md
-├── scripts/
-│   ├── audit_dataset_plan.py
-│   ├── run_evaluation.py
-│   ├── validate_golden_set.py
-│   └── verify_baseline.py
-├── src/trust_safety_agent/
-│   ├── __init__.py
-│   ├── config.py
-│   ├── adjudicator.py
-│   ├── brand_library.py
-│   ├── product_review.py
-│   ├── shop_identity.py
-│   ├── batch_io.py
-│   ├── reviewer_workspace.py
-│   ├── staging_dataset.py
-│   ├── trace.py
-│   ├── trace_builders.py
-│   ├── failure_taxonomy.py
-│   ├── controlled_tools.py
-│   ├── controlled_agent.py
-│   ├── prompt_skills.py
-│   ├── evaluation_lab.py
-│   ├── mcp_server.py
-│   ├── llm_adjudicator.py
-│   ├── llm_client.py
-│   ├── embeddings.py
-│   ├── evaluation.py
-│   ├── policy_loader.py
-│   ├── vector_store.py
-│   └── schema.py
-├── tests/
-│   ├── test_policy_loader.py
-│   ├── test_retrieval.py
-│   └── test_schema.py
-└── pyproject.toml
+输入校验
+  -> 证据标准化与提取
+  -> 品牌候选召回
+  -> 政策检索
+  -> 品牌知识检索
+  -> 规则与模型分析
+  -> 结果聚合
+  -> Guardrail
+  -> 发布审核建议
 ```
 
-## Setup
+每次运行生成独立的 Agent Run，并保存 Case 修订、Workflow/Prompt/Skill 版本、模型、索引版本、节点状态、延迟和脱敏错误。人工结论以 Reviewer Annotation 单独保存，不覆盖模型历史结果。
+
+## 数据与知识库
+
+- `synthetic_policy_v2`：结构化描述 Counterfeit、Knockoff、MBA、TMI、Shop Identity、豁免和转人工条件。
+- Controlled Brand Library：包含 50 个公共管控品牌，并与合成测试品牌分开标识。
+- Brand/Product Knowledge：保存品牌标准名、别名、拼写变体、品类和代表产品。
+- Demo Case Store：提供 10 条 Shop Case 和 18 条 Product Case，覆盖正常、违规、授权、豁免、证据不足和组合风险。
+- Golden Set v4：保留 210 条合成历史回归案例，用于验证既有规则和流程稳定性；不会被日常 Case 或候选数据覆盖。
+
+项目中的商品图为合成演示素材，并带有来源说明与 SHA-256 记录。离线规则不会假装从像素中识别视觉事实；真实图片理解仅在配置多模态模型后启用。
+
+## 本地运行
+
+### Python
+
+需要 Python 3.10 或更高版本：
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
+python -m venv .venv
+```
+
+Windows PowerShell：
+
+```powershell
+.\.venv\Scripts\Activate.ps1
 python -m pip install -e ".[dev]"
+streamlit run app.py
 ```
 
-## Docker
+打开 `http://localhost:8501`。
 
-Start the web application without an API key. Offline rules and policy
-retrieval remain available:
+### Docker
+
+无需 API Key 也可以运行离线规则、知识检索和演示流程：
 
 ```bash
 docker compose up --build -d
 ```
 
-Open `http://localhost:8501`. The Chroma index is persisted in the
-`policy-chroma` Docker volume. Reviewer records, staging candidates, and traces
-use separate Docker volumes and are not committed to Git.
-
-For multimodal inference, copy `.env.example` to `.env`, configure a new API
-key and model, then restart:
+查看日志：
 
 ```bash
-docker compose up --build -d
 docker compose logs -f policy-agent
 ```
 
-For Alibaba Cloud Model Studio (Bailian), including safe local key handling,
-structured-output compatibility, controlled model fallback, and the one-call
-smoke test, see [`docs/bailian_setup.md`](docs/bailian_setup.md).
-
-Use `APP_PORT` to expose a different host port:
+停止服务：
 
 ```bash
-APP_PORT=8080 docker compose up -d
+docker compose down
 ```
 
-Stop the service with `docker compose down`. Add `--volumes` only when the
-persisted policy index should also be deleted.
+可以通过 `APP_PORT` 修改宿主机端口。
 
-## Platform Compatibility
+## 模型配置
 
-Text rules, policy retrieval, evaluation, and the Streamlit workspace run on
-Windows, macOS, and Linux. The bundled local OCR helper uses Apple's Vision
-framework and therefore runs only on macOS. On Windows and in the Linux Docker
-image, image cases continue to the configured multimodal model; without a
-configured model they fail closed to human review. This changes offline image
-coverage, not the safety contract.
+复制 `.env.example` 为 `.env`，填入自己的模型服务配置：
 
-Use a multimodal provider for image review on Windows. Keep the API key in an
-environment variable or an ignored `.env` file; never commit it. Frozen
-baseline verification normalizes text line endings so LF and CRLF checkouts
-produce the same artifact hashes.
+```env
+LLM_API_KEY=your_private_key
+LLM_API_BASE=https://your-openai-compatible-endpoint/v1
+LLM_MODEL=your_multimodal_model
+```
 
-## Build the Policy KB
+`.env` 已被 Git 忽略。请勿把真实 API Key 写入代码、测试数据、README 或 Git 历史。
+
+也可以在应用的“模型与系统设置”中为当前会话临时配置 API 地址、Key 和模型。页面配置不会改写本地 `.env` 文件，重新启动会话后仍以环境变量为准。
+
+阿里云百炼的配置说明与安全使用方式见 [`docs/bailian_setup.md`](docs/bailian_setup.md)。
+
+## 测试与评测
+
+运行自动化测试：
 
 ```bash
-python scripts/build_policy_index.py \
-  --query "Gucci 1:1 replica handbag" \
-  --top-k 3
+pytest
 ```
 
-The persistent index defaults to `data/chroma` in the project workspace. Set
-`POLICY_DB_PATH` to override it.
-
-## Run a Case Decision
-
-Configure an OpenAI-compatible vision model:
+验证合成评测数据与历史回归数据：
 
 ```bash
-export LLM_API_KEY="..."
-export LLM_API_BASE="https://api.openai.com/v1"
-export LLM_MODEL="gpt-4o-mini"
+python scripts/validate_golden_set.py
+python scripts/verify_baseline.py
 ```
 
-Run multimodal inference with a local image:
+自动化测试主要验证数据模型、规则组合、授权逻辑、RAG 隔离、价格工具、Trace、Replay、Prompt 版本、发布回退和敏感信息过滤。它们用于证明系统行为符合预期，不等同于真实线上准确率。
 
-```bash
-python scripts/adjudicate_case.py \
-  --engine llm \
-  --content-type product \
-  --image ./product.jpg \
-  "Seller caption and listing context"
-```
+模型效果评测需要固定 Dataset、Workflow、Prompt、Skill、索引、温度和输出 Schema，仅改变待比较变量。没有完成真实模型批量评测时，项目不会宣称生产准确率或业务提效。
 
-The Streamlit sidebar accepts the same API settings for the current browser
-session. Uploaded images are sent to that configured endpoint and are not
-persisted by this project.
+## MCP 接口
 
-## Run a Product IPR Review
+项目提供可选的 MCP 服务，用于把政策检索、品牌查询、信号分析和审核能力暴露为结构化工具。MCP 不是运行 Web 工作台的必要条件。
 
-Open the `商品知识产权审核` tab in the Streamlit app. This workflow uses the
-versioned Controlled Brand Library in `data/brands/controlled_brands_v1.csv`
-and keeps these stages independently inspectable:
-
-1. Candidate recall from the seller brand field, title, description, OCR text,
-   and supplied visual marks.
-2. Boundary-safe matching against controlled brand names and aliases.
-3. Context validation for counterfeit language, compatibility, second-hand
-   sales, and ambiguous common-word brands.
-4. Policy retrieval and an auditable `approve`, `reject`, or `manual_review`
-   recommendation with reviewer checkpoints.
-
-A brand match is not treated as proof of infringement. Image submissions that
-do not include reliable OCR or visual marks route to manual review.
-
-## Batch and Human Review
-
-The Chinese-first Streamlit workspace includes dedicated views for Product IPR,
-Shop Identity, batch review, human review, traces, policy retrieval, and policy
-chunks. Batch review accepts UTF-8 CSV or `.xlsx`, validates required columns,
-URLs, duplicate IDs, empty files, and malformed rows, then exports filtered
-results as CSV or Excel.
-
-Example inputs:
-
-- `data/examples/product_review_batch.csv`
-- `data/examples/shop_identity_batch.csv`
-
-Shop authorization is evaluated before identity risk. A verified `authorized`
-status produces an authorization exemption; `unknown` is never treated as
-authorized. Avatar URLs are not treated as visual evidence unless reliable
-visual marks are supplied.
-
-Reviewer records preserve `agent_decision`, `reviewer_label`, and
-`final_decision` separately. Human-confirmed cases may enter the staging
-dataset, but the frozen Golden Set v4 is never modified. An explicit Promote
-action creates a separate v5 JSONL file and SHA-256 manifest.
-
-Execution traces record workflow nodes, sanitized summaries, outputs, status,
-latency, optional token usage, confidence, and errors. Keys, tokens, passwords,
-credentials, and Bearer values are recursively redacted before a trace is
-saved. New evaluation runs include `failure_counts` and a separate
-`failure_report.json`.
-
-## Controlled Agent
-
-The `受控 Agent` workspace uses the configured model as a planner. On each turn
-the model must either select one typed tool or return a final decision. The host
-enforces a tool allowlist, Pydantic input validation, a four-step limit,
-duplicate-call blocking, read/write separation, and a final evidence guardrail.
-The model cannot directly execute arbitrary code or write to the review queue.
-
-The planner accepts a narrow set of common OpenAI-compatible JSON tool-call
-shapes and normalizes them before strict validation. A reject is allowed only
-when a successful tool returned the same policy ID. Low-confidence, malformed,
-repeated, unauthorized, or unevidenced actions fail closed to human review.
-
-### How a knockoff decision is made
-
-The demo deliberately keeps three layers separate:
-
-1. The offline baseline uses explicit, testable signals. A knockoff candidate
-   requires an imitation phrase such as `dupe`, `knockoff`, `inspired copy`, or
-   `same design as`, together with a protected-brand reference. It then grounds
-   the result in `POL-KO-001`; a brand mention alone is not enough.
-2. The multimodal case workflow sends retrieved policy chunks plus a versioned
-   Prompt to the configured model. Code validates the returned schema, policy
-   evidence, exemption, and confidence before accepting the decision.
-3. The controlled Agent selects typed tools such as
-   `classify_policy_signals`, while the selected Skill restricts its Prompt,
-   tool allowlist, policy scope, maximum steps, and output contract.
-
-The `Prompt 与 Skill` workspace displays all built-in versions and can append
-custom versions to ignored local JSONL files. Temporary Prompt edits affect
-only that browser submission. Product IPR and Shop Identity remain
-deterministic pipelines; they do not expose decorative Prompt fields because
-those workflows do not call a model.
-
-Run one live call without printing the key:
-
-```bash
-python scripts/smoke_controlled_agent.py
-```
-
-## AI Evaluation Lab
-
-The `评测实验室` workspace indexes versioned evaluation artifacts under
-`data/eval_runs`. It can launch a new deterministic Golden Set v4 rules run and
-compare any baseline/candidate pair across quality, routing, review rate,
-failed gates, tokens, cost, and latency when those telemetry fields exist.
-
-This separates a model or Prompt change from a release decision: every result
-keeps its engine, Prompt version, retrieval version, dataset fingerprint, and
-quality-gate outcome.
-
-## MCP Integration
-
-`trust_safety_agent.mcp_server` is built with the official MCP Python SDK. It
-publishes six tools (`search_policy`, `lookup_brand`,
-`classify_policy_signals`, `review_product`, `get_review_queue`, and guarded
-`submit_human_review`), two resources, and one review prompt. Type hints become
-protocol schemas and successful tool results are returned as structured MCP
-content.
-
-Verify a real stdio subprocess handshake, discovery, resource listing, and tool
-call:
+验证本地 MCP 握手与工具调用：
 
 ```bash
 python scripts/smoke_mcp.py
 ```
 
-Start the optional Streamable HTTP service with Docker:
+启动可选的 HTTP 服务：
 
 ```bash
 docker compose --profile mcp up --build -d policy-mcp
 ```
 
-The endpoint is `http://localhost:8000/mcp` by default. The write tool requires
-both caller-side write permission and an explicit `user_confirmed=true`; read
-tools never receive the LLM API key.
+默认端点为 `http://localhost:8000/mcp`。写操作同时要求调用方权限和显式人工确认。
 
-Run the deterministic offline fallback:
+## 主要目录
 
-```bash
-python scripts/adjudicate_case.py \
-  --engine rules \
-  --content-type product \
-  "Gucci 1:1 replica handbag"
+```text
+trust-safety-policy-agent/
+├── app.py                         # Streamlit 应用入口
+├── config/                        # Prompt、Skill 与评测配置
+├── data/
+│   ├── brands/                    # 受控品牌库
+│   ├── case_store/                # 合成演示 Case
+│   ├── demo_assets/               # 合成商品图片及清单
+│   ├── golden_set/                # 历史回归集与候选集
+│   ├── knowledge/                 # 品牌商品知识源文档
+│   └── policies/                  # 合成政策源文档
+├── docs/                          # 使用说明与实现证据
+├── scripts/                       # 数据校验、评测与 smoke test
+├── src/trust_safety_agent/        # 核心业务与 AI 模块
+├── tests/                         # 自动化测试
+├── compose.yaml
+└── pyproject.toml
 ```
 
-Run the deterministic Day 3 regression smoke test:
+## 能力边界
 
-```bash
-python scripts/run_golden_smoke.py --strict
-```
+- 项目是本地可运行的作品集原型，并非企业生产系统。
+- 数据、政策和图片均为公开信息或合成内容，不代表任何公司的内部规则。
+- 离线 Provider 用于可复现演示，不伪装成实时网络检索结果。
+- Live Reference Price Provider 只保留明确的接入边界；无可靠来源时不会确认 Counterfeit。
+- Windows 和 Linux 使用配置的多模态模型处理图片；macOS 可额外使用本地 Vision OCR helper。
+- 系统输出是审核建议，最终结论仍需人工确认。
 
-## Run the Evaluation
+## License
 
-Run the Day 4 offline baseline with quality gates:
-
-```bash
-python scripts/run_evaluation.py \
-  --engine rules \
-  --run-id EV-DAY4-RULES-V1 \
-  --strict
-```
-
-Each run writes `report.json`, `records.jsonl`, and `errors.csv` under
-`data/eval_runs/<run-id>/`. Reports include strict accuracy, auto-decision
-accuracy, coverage, routing accuracy, policy accuracy, reject precision/recall,
-false approve/reject rates, confusion matrices, and metadata slices.
-
-Use `--engine llm` after configuring the multimodal provider. All evaluation
-engines use the same dataset, metrics, and gates.
-
-On macOS, the local `rules-ocr` engine uses Apple Vision OCR and then applies
-the deterministic policy rules. It only automates explicit violations and
-supported exemptions; unreadable images and negative visual claims stay in
-review:
-
-```bash
-python scripts/run_evaluation.py \
-  --dataset data/golden_set/golden_set_v3.csv \
-  --engine rules-ocr \
-  --run-id EV-DAY5-RULES-OCR-V1 \
-  --strict
-```
-
-Run the Day 6 production router. It uses deterministic rules for text, local
-OCR for local images, an optional configured multimodal LLM for unresolved or
-remote images, and fails closed to human review:
-
-```bash
-python scripts/run_evaluation.py \
-  --dataset data/golden_set/golden_set_v3.csv \
-  --engine production \
-  --run-id EV-DAY6-PRODUCTION-OFFLINE-V1 \
-  --strict
-```
-
-Production runs also write `routing_records.jsonl` with the selected engine and
-every escalation step. See `docs/day6_production_routing_strategy.md` for the
-thresholds and release rules.
-
-Run the Day 7 offline production baseline against Golden Set v4:
-
-```bash
-python scripts/run_evaluation.py \
-  --dataset data/golden_set/golden_set_v4.csv \
-  --engine production \
-  --gates config/evaluation_gates_day7_v1.json \
-  --run-id EV-DAY7-PRODUCTION-OFFLINE-V1 \
-  --strict
-```
-
-After configuring a fixed multimodal model and provider, add
-`--shadow-multimodal`. Production decisions remain unchanged while every image
-also produces `shadow_records.jsonl` and `shadow_report.json`:
-
-```bash
-python scripts/run_evaluation.py \
-  --dataset data/golden_set/golden_set_v4.csv \
-  --engine production \
-  --gates config/evaluation_gates_day7_v1.json \
-  --shadow-multimodal \
-  --run-id EV-DAY7-GPT4O-SHADOW-V1 \
-  --strict
-```
-
-The shadow gate requires strict-schema success, fixed provider/model metadata,
-decision and policy quality, and zero false approvals or false rejections.
-
-## Govern Dataset Expansion
-
-Verify that the Day 4 baseline inputs and expected metrics have not changed:
-
-```bash
-python scripts/verify_baseline.py --require-report
-python scripts/verify_baseline.py \
-  --manifest data/baselines/day5_rules_ocr_v1.json \
-  --require-report
-python scripts/verify_baseline.py \
-  --manifest data/baselines/day6_production_offline_v1.json \
-  --require-report
-python scripts/verify_baseline.py \
-  --manifest data/baselines/day7_production_offline_v1.json \
-  --require-report
-```
-
-Audit the current seed dataset against the Golden Set v3 targets:
-
-```bash
-python scripts/audit_dataset_plan.py
-```
-
-Golden Set v4 contains 210 cases, including 60 separately materialized blind
-cases and 90 hashed multimodal fixtures. Rebuild and validate it with:
-
-```bash
-python scripts/build_golden_set_v4.py
-python scripts/validate_golden_set.py
-python scripts/audit_dataset_plan.py --strict
-```
-
-The generated annotation ledger uses `synthetic_verified`, which records policy
-consistency but does not replace independent human signoff.
-
-## Run the App
-
-```bash
-streamlit run app.py
-```
-
-## Validate the Project
-
-```bash
-python scripts/validate_golden_set.py
-python scripts/verify_baseline.py
-pytest
-```
-
-The embedding and offline adjudication baselines remain deterministic. The
-multimodal engine uses a real OpenAI-compatible Chat Completions endpoint while
-preserving the same Policy KB and output contracts. See
-`docs/adjudication_baseline.md` for decision and evidence invariants.
-
-The dataset is synthetic and does not reproduce private or production policy
-content.
+本仓库用于个人学习、作品展示与技术交流。使用其中的合成数据和规则时，请保留其非生产、非公司内部资料的边界说明。

@@ -87,3 +87,21 @@ def test_common_word_context_is_not_identity_evidence(
 
     assert signal.signal_type == ShopNameSignalType.MEANINGFUL_COMMON_WORD
 
+
+def test_snow_meaningful_word_shop_is_approved_with_exemption_policy(
+    reviewer: ShopIdentityReviewer,
+) -> None:
+    result = reviewer.review(
+        ShopIdentityInput(
+            case_id="SHOP-SNOW-001",
+            shop_name="SNOW HANDMADE",
+            controlled_brand="Snow",
+            avatar_visual_marks=["snowflake illustration", "handmade craft context"],
+        )
+    )
+
+    assert result.shop_name_signal.signal_type == ShopNameSignalType.MEANINGFUL_COMMON_WORD
+    assert result.avatar_signal.signal_type == AvatarSignalType.UNRELATED_OBJECT
+    assert result.suggested_decision == ProductReviewDecision.APPROVE
+    assert result.possible_exemptions == ["meaningful_word"]
+    assert any(item.policy_id == "POL-EX-001" for item in result.policy_references)

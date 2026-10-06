@@ -38,7 +38,12 @@ from trust_safety_agent.vector_store import PolicyVectorStore
 
 
 def _ensure_index(store: PolicyVectorStore) -> None:
-    if store.count() == 0:
+    chunks = store.list_chunks()
+    if not chunks or any(
+        chunk.source != DEFAULT_POLICY_PATH.name
+        or chunk.policy_version != "v2.0.0"
+        for chunk in chunks
+    ):
         store.index(load_policy_file(DEFAULT_POLICY_PATH))
 
 
@@ -139,6 +144,15 @@ def create_mcp_server(
         optional_category: Optional[str] = None,
         ocr_text: str = "",
         visual_marks: Optional[list[str]] = None,
+        brand_authorization_status: str = "unknown",
+        observed_product_brand: Optional[str] = None,
+        logo_match_type: str = "not_assessed",
+        design_similarity: str = "not_assessed",
+        independent_brand_registered: bool = False,
+        listing_price: Optional[float] = None,
+        reference_price: Optional[float] = None,
+        image_quality: str = "not_assessed",
+        visual_confidence: float = 1.0,
     ) -> ProductReviewResult:
         payload = ProductReviewInput(
             case_id=case_id,
@@ -148,6 +162,15 @@ def create_mcp_server(
             optional_category=optional_category,
             ocr_text=ocr_text,
             visual_marks=visual_marks or [],
+            brand_authorization_status=brand_authorization_status,
+            observed_product_brand=observed_product_brand,
+            logo_match_type=logo_match_type,
+            design_similarity=design_similarity,
+            independent_brand_registered=independent_brand_registered,
+            listing_price=listing_price,
+            reference_price=reference_price,
+            image_quality=image_quality,
+            visual_confidence=visual_confidence,
         )
         return ProductReviewResult.model_validate(
             execute("review_product", payload.model_dump(mode="json"))
